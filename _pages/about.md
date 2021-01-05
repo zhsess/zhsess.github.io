@@ -29,3 +29,10 @@ Honors and Awards
 * 2019  Outstanding Research Award, Peking University
 * 2017  Merit Student, Peking University
 * 2017  May Forth Scholarship, Peking University
+
+Contact
+======
+Institute of Theoretical and Applied Geophysics, Peking University \
+8th Floor, Building 2, Science, Peking University, Beijing 100871
+
+Email: zhsess@gmail.com
