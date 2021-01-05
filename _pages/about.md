@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-I am currently a Ph.D student in the University of Southern California, under the supervision of Professor [Yehuda Ben-Zion](https://earth.usc.edu/~ybz/). I recieved my Bachelor's degree in Peking University, China.
+I am currently a Ph.D student major in **Geophysics**, at the University of Southern California, under the supervision of [Prof. Yehuda Ben-Zion](https://earth.usc.edu/~ybz/). I recieved my Bachelor's degree in Peking University, China (Thesis: *Frequency-Bessel Transform Method to Extract Higher-Mode Rayleigh Dispersion Curves*, supervised by [Prof. Xiaofei Chen](https://faculty.sustech.edu.cn/chenxf/en/).
 
 
 Research
@@ -20,7 +20,7 @@ Publications
 
 Talks & Presentations
 ======
-* Zhang, H., Zhou, S. et al., CPPC: A New Method to Detect and Pick the Fault Zone Head Wave Arrivals and its Application in Xiaojiang Fault Zone of West-Southern China, [AGU Fall Meeting, 2019](https://ui.adsabs.harvard.edu/abs/2019AGUFM.S53B..02Z/abstract)
+* **Zhang, H.**, Zhou, S. et al., CPPC: A New Method to Detect and Pick the Fault Zone Head Wave Arrivals and its Application in Xiaojiang Fault Zone of West-Southern China, [AGU Fall Meeting, 2019](https://ui.adsabs.harvard.edu/abs/2019AGUFM.S53B..02Z/abstract)
 
 Honors and Awards
 ======
