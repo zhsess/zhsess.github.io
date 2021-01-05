@@ -22,6 +22,8 @@ Talks & Presentations
 ======
 * **Zhang, H.**, Zhou, S. et al., CPPC: A New Method to Detect and Pick the Fault Zone Head Wave Arrivals and its Application in Xiaojiang Fault Zone of West-Southern China, [AGU Fall Meeting, 2019](https://ui.adsabs.harvard.edu/abs/2019AGUFM.S53B..02Z/abstract)
 
+### [A map of every location I've given a talk](https://zhsess.github.io/talkmap.html) 
+
 Honors and Awards
 ======
 * 2020  Outstanding Graduate of Peking University
