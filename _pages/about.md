@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "About me ([Curriculum Vitae](https://github.com/zhsess/zhsess.github.io/raw/master/_file/CV.pdf))"
+title: "About me"
 excerpt: "About me"
 author_profile: true
 redirect_from: 

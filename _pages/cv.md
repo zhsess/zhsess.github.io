@@ -1,6 +1,6 @@
 ---
 layout: archive
-title: "Cutticulum Vitae"
+title: "[Cutticulum Vitae](https://github.com/zhsess/zhsess.github.io/raw/master/_file/CV.pdf)"
 permalink: /cv/
 author_profile: true
 redirect_from:
