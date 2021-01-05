@@ -1,6 +1,6 @@
 ---
 layout: archive
-title: "CV"
+title: "Cutticulum Vitae"
 permalink: /cv/
 author_profile: true
 redirect_from:
@@ -12,9 +12,9 @@ redirect_from:
 Education
 ======
 * B.S. in Geophysics(with honor), Peking University, 2016.9-2020.7
-  * Advisor: Prof. Xiaofei Chen
+  * Advisor: Prof. [Xiaofei Chen](https://faculty.sustech.edu.cn/chenxf/en/)
 * Ph.D. student in Geophysics, University of Southern California, 2021.1-present
-  * Advisor: Prof. Yehuda Ben-Zion
+  * Advisor: Prof. [Yehuda Ben-Zion](https://earth.usc.edu/~ybz/)
 
 Work experience
 ======

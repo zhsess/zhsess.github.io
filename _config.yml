@@ -10,7 +10,7 @@ locale                   : "en-US"
 title                    : "Hao Zhang"
 title_separator          : "-"
 name                     : &name "Hao Zhang"
-description              : &description "PhD studend at University of Southern California"
+description              : &description "Ph.D studend at University of Southern California"
 url                      : https://zhsess.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "zhsess/zhsess.github.io"
@@ -82,7 +82,7 @@ analytics:
 author:
   name             : "Hao Zhang"
   avatar           : "profile.jpg"
-  bio              : "PhD student in Geophysics. Southern California Earthquake Center, University of Southern California"
+  bio              : "Ph.D student in Geophysics. Southern California Earthquake Center, University of Southern California"
   location         : "Los Angeles, California"
   employer         :
   pubmed           : 
