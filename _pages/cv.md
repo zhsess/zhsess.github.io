@@ -1,6 +1,6 @@
 ---
 layout: archive
-title: "[Cutticulum Vitae](https://github.com/zhsess/zhsess.github.io/raw/master/_file/CV.pdf)"
+title: "[Cutticulum Vitae]"
 permalink: /cv/
 author_profile: true
 redirect_from:
@@ -8,6 +8,8 @@ redirect_from:
 ---
 
 {% include base_path %}
+
+[Download PDF](https://github.com/zhsess/zhsess.github.io/raw/master/_file/CV.pdf)
 
 Education
 ======
