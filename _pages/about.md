@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "About me ([Curriculum Vitae]())"
+title: "About me ([Curriculum Vitae](https://github.com/zhsess/zhsess.github.io/raw/master/_file/CV.pdf))"
 excerpt: "About me"
 author_profile: true
 redirect_from: 
@@ -18,7 +18,7 @@ My research focuses on developing an improved framework for the physics of earth
 Publications
 ======
 
-Meeting Abstract
+Talks & Presentations
 ======
 * Zhang, H., Zhou, S. et al., CPPC: A New Method to Detect and Pick the Fault Zone Head Wave Arrivals and its Application in Xiaojiang Fault Zone of West-Southern China, AGU Fall Meeting, 2019
 
