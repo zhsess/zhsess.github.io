@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-I am currently a Ph.D student major in **Geophysics**, at the University of Southern California, under the supervision of [Prof. Yehuda Ben-Zion](https://earth.usc.edu/~ybz/). I recieved my Bachelor's degree in Peking University, China (Thesis: *Frequency-Bessel Transform Method to Extract Higher-Mode Rayleigh Dispersion Curves*, supervised by [Prof. Xiaofei Chen](https://faculty.sustech.edu.cn/chenxf/en/).
+I am currently a Ph.D student major in **Geophysics**, at the University of Southern California, under the supervision of [Prof. Yehuda Ben-Zion](https://earth.usc.edu/~ybz/). I recieved my Bachelor's degree at Peking University, China (Thesis: *Frequency-Bessel Transform Method to Extract Higher-Mode Rayleigh Dispersion Curves*, supervised by [Prof. Xiaofei Chen](https://faculty.sustech.edu.cn/chenxf/en/)）.
 
 
 Research
