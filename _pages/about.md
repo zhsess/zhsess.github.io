@@ -35,4 +35,4 @@ Contact
 Institute of Theoretical and Applied Geophysics, Peking University \
 8th Floor, Building 2, Science, Peking University, Beijing 100871
 
-Email: zhsess@gmail.com
+Email: [zhsess@gmail.com](zhsess@gmail.com) | [hzhang63@usc.edu](hzhang63@usc.edu)
