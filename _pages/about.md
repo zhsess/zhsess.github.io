@@ -33,6 +33,6 @@ Honors and Awards
 Contact
 ======
 Institute of Theoretical and Applied Geophysics, Peking University \
-8th Floor, Building 2, Science, Peking University, Beijing 100871
+Room 2829, Building 2, Science, Peking University, Beijing 100871
 
 Email: [zhsess@gmail.com](zhsess@gmail.com) &#124; [hzhang63@usc.edu](hzhang63@usc.edu)
