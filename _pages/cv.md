@@ -17,6 +17,10 @@ Education
   * Advisor: [Prof. Xiaofei Chen](https://faculty.sustech.edu.cn/chenxf/en/)
 * Ph.D. student in Geophysics, University of Southern California, 2021.1-present
   * Advisor: [Prof. Yehuda Ben-Zion](https://earth.usc.edu/~ybz/)
+  
+Professional Associations
+======
+* 2019 - Present $\quad$ Member, American Geophysical Union
 
 Work experience
 ======
