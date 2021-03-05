@@ -6,7 +6,7 @@ var addressPoints = [
   ],
   [
     "Hulunbuir, China",
-    29.2117,
+    49.2117,
     119.767
   ]
 ];
