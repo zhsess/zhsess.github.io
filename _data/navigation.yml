@@ -9,5 +9,8 @@ main:
   - title: "Blog Posts"
     url: /year-archive/
     
+  - title: "Fieldwork"
+    url: /fieldwork/
+
   - title: "CV"
-    url: /cv/
+    url: /cv/  
