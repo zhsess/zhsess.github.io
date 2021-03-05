@@ -10,5 +10,5 @@ Nothing is better than doing science outside!
 
 -------
 <b>Field Sites</b>
-<iframe src="/map/field_map.html" height="420" width="510" style="border:none;"></iframe>
+<iframe src="/map/field_map.html" height="700" width="850" style="border:none;"></iframe>
 
