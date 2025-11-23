@@ -5,9 +5,9 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Hao Zhang</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+  <title>Hao Zhang - Geophysicist at Caltech</title>
+  <meta content="Hao Zhang - Postdoctoral Researcher in Geophysics at Caltech Seismological Laboratory. Research on earthquake source properties, Earth's structure, and seismic array observations." name="description">
+  <meta content="Hao Zhang, Geophysics, Seismology, Caltech, Earthquake, Earth Structure, Seismic Array, Subduction Zones, Fault Zones" name="keywords">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -86,7 +86,7 @@
   <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
     <div class="hero-container" data-aos="fade-in">
       <h1>Hao Zhang</h1>
-      <p>A <span class="typed" data-typed-items="Postdoctral Researcher, Geophysicist"></span></p>
+      <p>A <span class="typed" data-typed-items="Postdoctoral Researcher, Geophysicist"></span></p>
 
       <p style="font-weight: lighter; font-size:larger;"><i>There are more things in heaven and earth <br>than are
           dreamt of in your philosophy.</i></p>
@@ -105,10 +105,11 @@
         </div>
 
         <div class="row">
-          <div class="col-lg-4" data-aos="fade-right">
-            <img src="assets/img/profile-img-3.png" class="img-fluid" alt="">
+          <div class="col-lg-5" data-aos="fade-right">
+            <img src="assets/img/dinner.jpeg" class="img-fluid" alt="">
+            <p class="text-center mt-2" style="color: #6c757d; font-size: 0.9rem; font-style: italic;">Dinner with Heidi, John, Yehuda and Tom after my PhD defense</p>
           </div>
-          <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
+          <div class="col-lg-7 pt-4 pt-lg-0 content" data-aos="fade-left">
             <h3>Biography</h3>
             <p>I am a postdoctoral researcher at the Seismological Laboratory, Caltech. I received my Ph.D. in
               Geophysics from the University of Southern California in 2025. Before joining USC, I worked as a Research
@@ -137,41 +138,54 @@
         <div class="section-title">
           <h2>News</h2>
           <div class="resume-item">
-            <ul>
+            <ul id="news-list">
               <li><b>06/2025</b> I start my new position as a postdoctoral scholar research associate at Caltech.</li>
               <li><b>04/2025</b> I successfully defended my Ph.D. thesis!</li>
-
-              <!-- <div class="container"></div>
-                <div class="row">
-                  <div class="col-lg-5 mt-3" data-aos="fade-up">
-                    <img src="assets/img/gallary/defense.jpg" class="img-fluid" alt="">
-                  </div>
-        
-                  <div class="col-lg-5 mt-3" data-aos="fade-up" data-aos-delay="100">
-                    <img src="assets/img/gallary/dinner.jpg" class="img-fluid" alt="">
-                  </div>
-                </div>
-              </div> -->
-
               <li><b>04/2025</b> I have started my service on the AGU Seismology Session Early Career Subcommittee</li>
-              <li><b>01/2025</b> I recieved postdoc fellowships from both SeismoLab at Caltech and IGPP, UCSD</li>
+              <li><b>01/2025</b> I received postdoc fellowships from both SeismoLab at Caltech and IGPP, UCSD</li>
               <li><b>12/2024</b> My paper <i>Aftershocks on the planar rupture surface of the deep-focus Mw 7.9 Bonin
                   Islands earthquake</i> is accepted by TSR and reported by <a
                   href="https://phys.org/news/2025-01-aftershock-analysis-world-deepest-earthquake.html">SSA</a></li>
-              <li><b>12/2024</b> I received my second <i>Earth Sciences Graduate Student Research Award</i> ($3000) to
-                support the upcoming <i>Array of Arrays</i> fieldwork</li>
-              <li><b>09/2024</b> My paper <i>Scattering Evidence for an Ancient Subducted Slab Using the Unique Raypath
-                  P*PKP</i> is accepted by GRL</li>
-              <li><b>04/2024</b> I have passed my qualifying exam, and am now officially a Ph.D. candidate!</li>
-              <li><b>01/2024</b> My paper <i>Enhancing Regional Seismic Velocity Models With Higher-Resolution Local
-                  Results Using Sparse Dictionary Learning</i> is accepted by JGR: Solid Earth</li>
-              <li><b>06/2023</b> My paper <i>Lateral Variations Across the Southern San Andreas Fault Zone Revealed From
-                  Analysis of Traffic Signals at a Dense Seismic Array</i> is accepted by GRL</li>
-              <li><b>03/2023</b> The GJI paper on Fault Zone Head Waves has been accepted, which includes contributions
-                from my undergraduate work.</li>
+              
+              <!-- Older news items (hidden by default) -->
+              <div id="older-news" style="display: none;">
+                <li><b>12/2024</b> I received my second <i>Earth Sciences Graduate Student Research Award</i> ($3000) to
+                  support the upcoming <i>Array of Arrays</i> fieldwork</li>
+                <li><b>09/2024</b> My paper <i>Scattering Evidence for an Ancient Subducted Slab Using the Unique Raypath
+                    P*PKP</i> is accepted by GRL</li>
+                <li><b>04/2024</b> I have passed my qualifying exam, and am now officially a Ph.D. candidate!</li>
+                <li><b>01/2024</b> My paper <i>Enhancing Regional Seismic Velocity Models With Higher-Resolution Local
+                    Results Using Sparse Dictionary Learning</i> is accepted by JGR: Solid Earth</li>
+                <li><b>06/2023</b> My paper <i>Lateral Variations Across the Southern San Andreas Fault Zone Revealed From
+                    Analysis of Traffic Signals at a Dense Seismic Array</i> is accepted by GRL</li>
+                <li><b>03/2023</b> The GJI paper on Fault Zone Head Waves has been accepted, which includes contributions
+                  from my undergraduate work.</li>
+              </div>
             </ul>
+            
+            <!-- Show More Button -->
+            <div class="text-center mt-3">
+              <button id="show-more-news" class="btn btn-outline-primary" onclick="toggleOlderNews()" style="border-radius: 20px; padding: 8px 30px; font-size: 0.95rem;">
+                <i class="bi bi-chevron-down"></i> Show More
+              </button>
+            </div>
           </div>
         </div>
+        
+        <script>
+          function toggleOlderNews() {
+            var olderNews = document.getElementById('older-news');
+            var button = document.getElementById('show-more-news');
+            
+            if (olderNews.style.display === 'none') {
+              olderNews.style.display = 'block';
+              button.innerHTML = '<i class="bi bi-chevron-up"></i> Show Less';
+            } else {
+              olderNews.style.display = 'none';
+              button.innerHTML = '<i class="bi bi-chevron-down"></i> Show More';
+            }
+          }
+        </script>
 
       </div>
     </section><!-- End Facts Section -->
@@ -230,7 +244,7 @@
               <p><em>Institute of Geophysics, China Earthquake Administration, Beijing, China</em></p>
             </div>
 
-            <h3 class="resume-title">Honers &amp; Awards</h3>
+            <h3 class="resume-title">Honors &amp; Awards</h3>
             <div class="resume-item">
               <ul>
                 <li>2025 Cecil H. and Ida M. Green Postdoctoral Fellowship, IGPP, UCSD</li>
