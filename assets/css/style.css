@@ -127,6 +127,16 @@ h6 {
   text-decoration: none;
 }
 
+#header .profile .social-links a.google-scholar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#header .profile .social-links a.google-scholar svg {
+  vertical-align: middle;
+}
+
 #main {
   margin-left: 300px;
 }
