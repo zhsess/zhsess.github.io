@@ -33,6 +33,311 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+  <!-- Publications Interactive CSS -->
+  <style>
+    .coordinate-system {
+      position: relative;
+      width: 100%;
+      max-width: 700px;
+      height: 700px;
+      margin: 40px auto;
+      background: #ffffffd5;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .coordinate-canvas {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      padding: 60px;
+    }
+
+    .axis {
+      position: absolute;
+      background: #333;
+    }
+
+    .axis-x {
+      left: 60px;
+      right: 60px;
+      top: 50%;
+      height: 2px;
+      transform: translateY(-1px);
+    }
+
+    .axis-y {
+      top: 60px;
+      bottom: 60px;
+      left: 50%;
+      width: 2px;
+      transform: translateX(-1px);
+    }
+
+    .axis-label {
+      position: absolute;
+      font-size: 14px;
+      font-weight: bold;
+      color: #555;
+      white-space: nowrap;
+    }
+
+    .label-x-left {
+      left: 80px;
+      top: 50%;
+      transform: translate(-100%, -50%) translateY(20px) translateX(15px);
+      padding-right: 10px;
+    }
+
+    .label-x-right {
+      right: 80px;
+      top: 50%;
+      transform: translate(100%, -50%) translateY(20px) translateX(-15px);
+      padding-left: 10px;
+    }
+
+    .label-y-top {
+      left: 50%;
+      top: 60px;
+      transform: translate(-50%, -100%);
+      padding-bottom: 10px;
+    }
+
+    .label-y-bottom {
+      left: 50%;
+      bottom: 60px;
+      transform: translate(-50%, 100%);
+      padding-top: 10px;
+    }
+
+    .publication-point {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #4a90e2;
+      border: 2px solid #333;
+      border-radius: 50%;
+      cursor: pointer;
+      transform: translate(-50%, -50%);
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+
+    .publication-point.published {
+      background: #4a90e2;
+    }
+
+    .publication-point.in-review {
+      background: #f39c12;
+    }
+
+    .publication-point.in-prep {
+      background: #95a5a6;
+    }
+
+    .publication-point:hover {
+      width: 26px;
+      height: 26px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .publication-point.published:hover {
+      background: #357abd;
+    }
+
+    .publication-point.in-review:hover {
+      background: #e67e22;
+    }
+
+    .publication-point.in-prep:hover {
+      background: #7f8c8d;
+    }
+
+    .publication-point.active {
+      width: 26px;
+      height: 26px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .publication-label {
+      position: absolute;
+      font-size: 12px;
+      color: #555;
+      text-align: center;
+      white-space: nowrap;
+      pointer-events: none;
+      transform: translate(-50%, 0);
+      margin-top: 18px;
+      font-weight: 500;
+      z-index: 9;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    .quadrant-message {
+      position: absolute;
+      font-size: 16px;
+      color: #666;
+      text-align: center;
+      font-weight: bold;
+      line-height: 1.5;
+      max-width: 200px;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .legend {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      z-index: 20;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 12px 16px;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .legend-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .legend-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid #333;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .legend-dot.published {
+      background: #4a90e2;
+    }
+
+    .legend-dot.in-review {
+      background: #f39c12;
+    }
+
+    .legend-dot.in-prep {
+      background: #95a5a6;
+    }
+
+    .legend-text {
+      font-size: 13px;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .tooltip {
+      position: fixed;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 12px 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      max-width: 400px;
+      z-index: 1000;
+      pointer-events: auto;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .tooltip a {
+      color: #149ddd;
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .tooltip a:hover {
+      text-decoration: underline;
+    }
+
+    .tooltip.show {
+      opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+      .coordinate-system {
+        height: 500px;
+      }
+      
+      .coordinate-canvas {
+        padding: 40px;
+      }
+
+      .axis-x {
+        left: 40px;
+        right: 40px;
+      }
+
+      .axis-y {
+        top: 40px;
+        bottom: 40px;
+      }
+
+      .label-x-left {
+        left: 40px;
+        font-size: 12px;
+        transform: translate(-100%, -50%) translateY(12px) translateX(12px);
+      }
+
+      .label-x-right {
+        right: 40px;
+        font-size: 12px;
+        transform: translate(100%, -50%) translateY(12px) translateX(-12px);
+      }
+
+      .label-y-top {
+        top: 40px;
+        font-size: 12px;
+      }
+
+      .label-y-bottom {
+        bottom: 40px;
+        font-size: 12px;
+      }
+
+      .tooltip {
+        max-width: 280px;
+        font-size: 12px;
+      }
+
+      .publication-label {
+        font-size: 10px;
+        margin-top: 15px;
+      }
+
+      .quadrant-message {
+        font-size: 14px;
+        max-width: 150px;
+      }
+
+      .legend {
+        top: 50px;
+        left: 50px;
+        padding: 10px 12px;
+      }
+
+      .legend-text {
+        font-size: 11px;
+      }
+
+      .legend-dot {
+        width: 14px;
+        height: 14px;
+      }
+    }
+  </style>
+
   <!-- =======================================================
   * Template Name: iPortfolio
   * Updated: Nov 17 2023 with Bootstrap v5.3.2
@@ -281,159 +586,43 @@
 
         <div class="section-title">
           <h2>Publications</h2>
-          <p style="font-weight: lighter;"><i>I consider that the "truth" lies at the intersection of physics,
-              thermodynamics, geology, petrology, tectonics, fluid dynamics ... &mdash; Don L. Anderson</i></p>
-          <p style="text-align: center; margin-top: 15px;">
-            <a href="publication-interactive.html" class="btn btn-primary" style="background: #149ddd; border: none; padding: 8px 20px; border-radius: 5px; color: white; text-decoration: none; display: inline-block;">
-              <i class="bx bx-scatter-chart"></i> Interactive View
-            </a>
-          </p>
+          <p style="font-weight: normal;">Self-assessment of my published work in the dimensions of novelty and robustness. My contributions aim to achieve both.</p>
+          <p style="font-weight: lighter;">* <i>Hover over points for details; Only first-author and corresponding-author papers are included.</i></p>
         </div>
 
-        <div class="row" data-aos="fade-up">
-          <div class="col-lg-16 d-flex justify-content-center">
-            <ul id="portfolio-flters">
-              <li data-filter=".filter-all" class="filter-active">All</li>
-              <li data-filter=".filter-source">Source</li>
-              <li data-filter=".filter-structure">Structure</li>
-              <li data-filter=".filter-fieldwork">Lab &amp; Fieldwork</li>
-            </ul>
-          </div>
-        </div>
+        <!-- Interactive Coordinate System -->
+        <div class="coordinate-system">
+          <div class="coordinate-canvas" id="coordinateCanvas">
+            <!-- Axes -->
+            <div class="axis axis-x"></div>
+            <div class="axis axis-y"></div>
+            
+            <!-- Axis Labels -->
+            <div class="axis-label label-x-left">Refinement</div>
+            <div class="axis-label label-x-right">Novelty</div>
+            <div class="axis-label label-y-top">Robustness</div>
+            <div class="axis-label label-y-bottom">Preliminary Nature</div>
 
-
-
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100">
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-source filter-all">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/source.png" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/source.png" data-gallery="portfolioGallery" class="portfolio-lightbox"
-                  title="Deep beneath, the fault unlocks, and Earth whispers through trembling waves."><i
-                    class="bx bx-plus"></i></a>
-                <a href="publication-source.html" title="More Details"><i class="bx bx-link"></i></a>
+            <!-- Legend -->
+            <div class="legend">
+              <div class="legend-item">
+                <div class="legend-dot published"></div>
+                <div class="legend-text">Published</div>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot in-review"></div>
+                <div class="legend-text">In Review</div>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot in-prep"></div>
+                <div class="legend-text">In Prep.</div>
               </div>
             </div>
           </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-structure filter-all">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/structure.png" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/structure.png" data-gallery="portfolioGallery" class="portfolio-lightbox"
-                  title="Layer by layer, Earth reveals—a silent tale of fire and stone."><i class="bx bx-plus"></i></a>
-                <a href="publication-structure.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-fieldwork filter-all">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/lab.png" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/lab.png" data-gallery="portfolioGallery" class="portfolio-lightbox"
-                  title="From rock to wave, in lab and land, we trace Earth's hidden hand."><i
-                    class="bx bx-plus"></i></a>
-                <a href="publication-fieldwork.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-12 portfolio-item filter-all">
-            <ul>
-              <!-- <li><b> Zhang, H.</b>  &amp; Jordan, T.H., Searching for slow precursors to megathrust earthquakes, in prep.</li> -->
-              <li> Cui, T., Wang, W., Vidale, J.E., <b> Zhang, H.</b>, Luo, H. &amp; Ai, Y., Decadal Stability of
-                Multi-Scale Core-Mantle Boundary in Core-Reflections of Repeating Earthquakes, under review</li>
-              <li><b> Zhang, H.</b>, Barbot, S., Yang, Z., Zhang, L., Liu, M. &amp; Platt, J., Large megathrust
-                earthquakes in cold mantle wedge corners under lawsonite blueschist facies, under review</li>
-              <li><b> Zhang, H.</b> &amp; Vidale, J.E., Earthquake high-frequency energy radiation scales with rupture
-                complexity, under review</li>
-              <li>Zhang, S., Houston, H., Wang, B. &amp; <b> Zhang, H.</b>, Mapping of absolute stresses around two
-                California earthquakes reveals a very weak crust, under review</li>
-              <li> Wu, B., Li, B., <b> Zhang, H.</b>, Huang, S., Li, G. &amp; Gabriel, A.-A., Near‑fault Strong‑motion
-                of the 2023 Mw7.8 Kahramanmaraş Earthquake: Insights into High‑frequency Radiation Mechanisms, <i>JGR:
-                  Solid Earth</i>, <b>130</b>, e2025JB031757, doi: <a
-                  href="https://doi.org/10.1029/2025JB031757">10.1029/2025JB031757</a></li>
-              <li>Barbot, S., Güvercin, S.E., Zhang, L., <b> Zhang, H. </b> &amp; Yang, Z., Thermobaric control of fault
-                friction, <i>Geophy. Res. Let.</i>, <b>52</b>, e2024GL112959, doi: <a
-                  href="https://doi.org/10.1029/2024GL112959">10.1029/2024GL112959</a></li>
-              <li><b> Zhang, H.</b>, Vidale, J.E. &amp; Wang, W., 2025. Aftershocks on the planar rupture surface of the
-                deep-focus Mw 7.9 Bonin Islands earthquake, <i>The Seismic Record</i>, <b>5(1)</b>:35-43, doi: <a
-                  href="https://doi.org/10.1785/0320240035">10.1785/0320240035</a></li>
-              <li><b> Zhang, H.</b>, Vidale, J.E. &amp; Wang, W., 2024. Scattering evidence for an ancient subducted
-                slab using the novel raypath P*PKP, <i>Geophy. Res. Let.</i>, <b>51</b>, e2024GL110130, doi: <a
-                  href="https://doi.org/10.1029/2024GL110130">10.1029/2024GL110130</a></li>
-              <li><b> Zhang, H.</b> &amp Ben-Zion, Y., 2024. Enhancing regional seismic velocity model with
-                higher-resolution local results using sparse dictionary learning, <i>JGR: Solid Earth</i>, <b>129</b>,
-                e2023JB027016, doi: <a href="https://doi.org/10.1029/2023JB027016">10.1029/2023JB027016</a></li>
-              <li><b> Zhang, H.</b>, Meng, H. &amp; Ben-Zion, Y., 2023. Lateral Variations Across the Southern San
-                Andreas Fault Zone Revealed from Analysis of Traffic Signals at a Dense Seismic Array, <i>Geophy. Res.
-                  Let.</i>, <b>50</b>, e2023GL103759, doi: <a
-                  href="https://doi.org/10.1029/2023GL103759">10.1029/2023GL103759</a></li>
-              <li>Wang, L., Zhou, Y., Zhou, S. &amp; <b> Zhang, H.</b>, 2023. Detection of Fault Zone Head Waves and the
-                Fault Interface Imaging in the Xianshuihe-Anninghe Fault Zone (Eastern Tibetan Plateau), <i>Geophy. J.
-                  Int.</i>, <b>234</b>(2), 1157-1167, doi: <a
-                  href="https://doi.org/10.1093/gji/ggad131">10.1093/gji/ggad131</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-8 col-md-6 portfolio-item filter-source">
-            <ul>
-              <li><b> Zhang, H.</b> &amp; Jordan, T.H., Searching for slow precursors to megathrust earthquakes, in
-                prep.</li>
-              <li><b> Zhang, H.</b>, Barbot, S., Yang, Z., Zhang, L., Liu, M. &amp; Platt, J., Large megathrust
-                earthquakes in cold mantle wedge corners under lawsonite blueschist facies, under review</li>
-              <li><b> Zhang, H.</b> &amp; Vidale, J.E., Earthquake high-frequency energy radiation scales with rupture
-                complexity, under review</li>
-              <li> Wu, B., Li, B., <b> Zhang, H.</b>, Huang, S., Li, G. &amp; Gabriel, A.-A., Near‑fault Strong‑motion
-                of the 2023 Mw7.8 Kahramanmaraş Earthquake: Insights into High‑frequency Radiation Mechanisms, <i>JGR:
-                  Solid Earth</i>, <b>130</b>, e2025JB031757, doi: <a
-                  href="https://doi.org/10.1029/2025JB031757">10.1029/2025JB031757</a></li>
-              <li>Barbot, S., Güvercin, S.E., Zhang, L., <b> Zhang, H. </b> &amp; Yang, Z., Thermobaric control of fault
-                friction, <i>Geophy. Res. Let.</i>, <b>52</b>, e2024GL112959, doi: <a
-                  href="https://doi.org/10.1029/2024GL112959">10.1029/2024GL112959</a></li>
-              <li><b> Zhang, H.</b>, Vidale, J.E. &amp; Wang, W., 2025. Aftershocks on the planar rupture surface of the
-                deep-focus Mw 7.9 Bonin Islands earthquake, <i>The Seismic Record</i>, <b>5(1)</b>:35-43, doi: <a
-                  href="https://doi.org/10.1785/0320240035">10.1785/0320240035</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-8 col-md-6 portfolio-item filter-structure">
-            <ul>
-              <li> Cui, T., Wang, W., Vidale, J.E., <b> Zhang, H.</b>, Luo, H. &amp; Ai, Y., Decadal Stability of
-                Multi-Scale Core-Mantle Boundary in Core-Reflections of Repeating Earthquakes, under review</li>
-              <li>Zhang, S., Houston, H., Wang, B. &amp; <b> Zhang, H.</b>, Mapping of absolute stresses around two
-                California earthquakes reveals a very weak crust, under review</li>
-              <li><b> Zhang, H.</b>, Vidale, J.E. &amp; Wang, W., 2024. Scattering evidence for an ancient subducted
-                slab using the novel raypath P*PKP, <i>Geophy. Res. Let.</i>, <b>51</b>, e2024GL110130, doi: <a
-                  href="https://doi.org/10.1029/2024GL110130">10.1029/2024GL110130</a></li>
-              <li><b> Zhang, H.</b> &amp Ben-Zion, Y., 2024. Enhancing regional seismic velocity model with
-                higher-resolution local results using sparse dictionary learning, <i>JGR: Solid Earth</i>, <b>129</b>,
-                e2023JB027016, doi: <a href="https://doi.org/10.1029/2023JB027016">10.1029/2023JB027016</a></li>
-              <li><b> Zhang, H.</b>, Meng, H. &amp; Ben-Zion, Y., 2023. Lateral Variations Across the Southern San
-                Andreas Fault Zone Revealed from Analysis of Traffic Signals at a Dense Seismic Array, <i>Geophy. Res.
-                  Let.</i>, <b>50</b>, e2023GL103759, doi: <a
-                  href="https://doi.org/10.1029/2023GL103759">10.1029/2023GL103759</a></li>
-              <li>Wang, L., Zhou, Y., Zhou, S. &amp; <b> Zhang, H.</b>, 2023. Detection of Fault Zone Head Waves and the
-                Fault Interface Imaging in the Xianshuihe-Anninghe Fault Zone (Eastern Tibetan Plateau), <i>Geophy. J.
-                  Int.</i>, <b>234</b>(2), 1157-1167, doi: <a
-                  href="https://doi.org/10.1093/gji/ggad131">10.1093/gji/ggad131</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-8 col-md-6 portfolio-item filter-fieldwork">
-            <ul>
-              <li><b> Zhang, H.</b>, Barbot, S., Yang, Z., Zhang, L., Liu, M. &amp; Platt, J., Large megathrust
-                earthquakes in cold mantle wedge corners under lawsonite blueschist facies, under review</li>
-              <li>Barbot, S., Güvercin, S.E., Zhang, L., <b> Zhang, H. </b> &amp; Yang, Z., Thermobaric control of fault
-                friction, <i>Geophy. Res. Let.</i>, <b>52</b>, e2024GL112959, doi: <a
-                  href="https://doi.org/10.1029/2024GL112959">10.1029/2024GL112959</a></li>
-            </ul>
-          </div>
-
         </div>
 
+        <!-- Tooltip -->
+        <div id="tooltip" class="tooltip"></div>
 
       </div>
     </section><!-- End Portfolio Section -->
@@ -519,6 +708,254 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/isotope/3.0.6/isotope.pkgd.min.js"></script>
 
   <script src="assets/js/active_portfolio.js"></script>
+
+  <!-- Publications Interactive Script -->
+  <script>
+    // Publications data
+    const publicationsData = [
+      {
+        "x": 8,
+        "y": 8,
+        "shortName": "Zhang & Zhan, in prep.",
+        "citation": "<b> Zhang, H.</b> & Zhan, Z., Illuminating shaded earthquake ruptures with multi-fiber networks",
+        "doi": null,
+        "status": "in-prep"
+      },
+      {
+        "x": 9,
+        "y": 2,
+        "shortName": "Zhang & Vidale, in review",
+        "citation": "<b> Zhang, H.</b> & Vidale, J.E., Earthquake high-frequency energy radiation scales with rupture complexity",
+        "doi": null,
+        "status": "in-review"
+      },
+      {
+        "x": 5,
+        "y": 7,
+        "shortName": "Zhang et al. in review",
+        "citation": "<b> Zhang, H.</b>, Barbot, S., Yang, Z., Zhang, L., Liu, M. &amp; Platt, J., Large megathrust earthquakes in cold mantle wedge corners under lawsonite blueschist facies",
+        "doi": null,
+        "status": "in-review"
+      },
+      {
+        "x": -2,
+        "y": 9,
+        "shortName": "Zhang et al., 2025",
+        "citation": "<b> Zhang, H.</b>, Vidale, J.E. & Wang, W., 2025. Aftershocks on the planar rupture surface of the deep-focus Mw 7.9 Bonin Islands earthquake, <i>The Seismic Record</i>, <b>5(1)</b>:35-43",
+        "doi": "10.1785/0320240035",
+        "status": "published"
+      },
+      {
+        "x": 6,
+        "y": 3,
+        "shortName": "Zhang et al., JGR, 2024",
+        "citation": "<b> Zhang, H.</b>, Vidale, J.E. & Wang, W., 2024. Scattering evidence for an ancient subducted slab using the novel raypath P*PKP, <i>Geophy. Res. Let.</i>, <b>51</b>, e2024GL110130",
+        "doi": "10.1029/2024GL110130",
+        "status": "published"
+      },
+      {
+        "x": 8,
+        "y": -2,
+        "shortName": "Zhang & Ben-Zion, 2024",
+        "citation": "<b> Zhang, H.</b> & Ben-Zion, Y., 2024. Enhancing regional seismic velocity model with higher-resolution local results using sparse dictionary learning, <i>JGR: Solid Earth</i>, <b>129</b>, e2023JB027016",
+        "doi": "10.1029/2023JB027016",
+        "status": "published"
+      },
+      {
+        "x": 1,
+        "y": 7,
+        "shortName": "Zhang et al., 2023",
+        "citation": "<b> Zhang, H.</b>, Meng, H. & Ben-Zion, Y., 2023. Lateral Variations Across the Southern San Andreas Fault Zone Revealed from Analysis of Traffic Signals at a Dense Seismic Array, <i>Geophy. Res. Let.</i>, <b>50</b>, e2023GL103759",
+        "doi": "10.1029/2023GL103759",
+        "status": "published"
+      }
+    ];
+
+    // Load and render publications
+    function loadPublications() {
+      try {
+        console.log('Loading publications...');
+        const publications = publicationsData;
+        console.log('Publications loaded:', publications.length);
+        
+        if (publications && publications.length > 0) {
+          renderPublications(publications);
+        } else {
+          console.error('No publications found');
+        }
+      } catch (error) {
+        console.error('Error loading publications:', error);
+      }
+    }
+
+    function renderPublications(publications) {
+      const canvas = document.getElementById('coordinateCanvas');
+      if (!canvas) return;
+      
+      const tooltip = document.getElementById('tooltip');
+      
+      // Clear any existing points, labels, and messages
+      const existingElements = canvas.querySelectorAll('.publication-point, .publication-label, .quadrant-message');
+      existingElements.forEach(element => element.remove());
+      
+      // Get the actual rendering area (excluding padding)
+      const padding = window.innerWidth <= 768 ? 40 : 60;
+      const width = canvas.clientWidth - padding * 2;
+      const height = canvas.clientHeight - padding * 2;
+
+      console.log('Canvas dimensions:', { width, height, padding });
+
+      // Add message in third quadrant (x < 0, y < 0)
+      // Center of third quadrant: x=-5, y=-5 in coordinate terms
+      const messageX = ((- 5 + 10) / 20) * width + padding;
+      const messageY = ((- (- 5) + 10) / 20) * height + padding;
+      
+      const message = document.createElement('div');
+      message.className = 'quadrant-message';
+      message.style.left = messageX + 'px';
+      message.style.top = messageY + 'px';
+      message.style.transform = 'translate(-50%, -50%)';
+      message.innerHTML = 'Let me know if you think<br>any of my papers fall<br>within this domain';
+      canvas.appendChild(message);
+
+      publications.forEach((pub, index) => {
+        // Validate publication data
+        if (typeof pub.x !== 'number' || typeof pub.y !== 'number') {
+          console.warn('Invalid publication data:', pub);
+          return;
+        }
+
+        // Convert coordinates from [-10, 10] to pixel positions
+        const x = ((pub.x + 10) / 20) * width + padding;
+        const y = ((-pub.y + 10) / 20) * height + padding; // Invert Y axis
+
+        // Create point element
+        const point = document.createElement('div');
+        point.className = 'publication-point';
+        
+        // Add status class for color
+        const status = pub.status || 'published';
+        point.classList.add(status);
+        
+        point.style.left = x + 'px';
+        point.style.top = y + 'px';
+        point.dataset.citation = pub.citation;
+        point.dataset.doi = pub.doi || '';
+        point.dataset.index = index;
+
+        // Create label element if shortName exists
+        if (pub.shortName) {
+          const label = document.createElement('div');
+          label.className = 'publication-label';
+          label.style.left = x + 'px';
+          label.style.top = y + 'px';
+          label.textContent = pub.shortName;
+          canvas.appendChild(label);
+        }
+
+        // Mouse events
+        point.addEventListener('mouseenter', function(e) {
+          showTooltip(e, this);
+        });
+
+        point.addEventListener('mouseleave', function(e) {
+          hideTooltip();
+        });
+
+        // Touch events for mobile
+        point.addEventListener('touchstart', function(e) {
+          e.preventDefault();
+          this.classList.add('active');
+          showTooltip(e.touches[0], this);
+        });
+
+        point.addEventListener('touchend', function(e) {
+          e.preventDefault();
+          this.classList.remove('active');
+          hideTooltip();
+        });
+
+        canvas.appendChild(point);
+      });
+
+      console.log('Rendered', publications.length, 'publication points');
+
+      function showTooltip(event, element) {
+        const citation = element.dataset.citation;
+        const doi = element.dataset.doi;
+        
+        // Create HTML content with DOI link if available
+        let content = citation;
+        if (doi && doi !== 'null' && doi !== '') {
+          content += `<br><br><a href="https://doi.org/${doi}" target="_blank" rel="noopener noreferrer">DOI: ${doi}</a>`;
+        }
+        
+        tooltip.innerHTML = content;
+        tooltip.classList.add('show');
+
+        // Position tooltip (need to wait for content to render)
+        setTimeout(() => {
+          const pointRect = element.getBoundingClientRect();
+          const tooltipRect = tooltip.getBoundingClientRect();
+          
+          let left = pointRect.left + pointRect.width / 2;
+          let top = pointRect.top - tooltipRect.height - 10;
+
+          // Adjust if tooltip goes off screen
+          if (left + tooltipRect.width / 2 > window.innerWidth) {
+            left = window.innerWidth - tooltipRect.width / 2 - 10;
+          }
+          if (left - tooltipRect.width / 2 < 0) {
+            left = tooltipRect.width / 2 + 10;
+          }
+          if (top < 0) {
+            top = pointRect.bottom + 10;
+          }
+
+          tooltip.style.left = left + 'px';
+          tooltip.style.top = top + 'px';
+          tooltip.style.transform = 'translateX(-50%)';
+        }, 0);
+      }
+
+      function hideTooltip() {
+        // Delay hiding to allow clicking on links
+        setTimeout(() => {
+          if (!tooltip.matches(':hover')) {
+            tooltip.classList.remove('show');
+          }
+        }, 100);
+      }
+
+      // Hide tooltip when it's no longer hovered
+      tooltip.addEventListener('mouseleave', function() {
+        tooltip.classList.remove('show');
+      });
+
+      // Hide tooltip when scrolling
+      window.addEventListener('scroll', hideTooltip);
+      
+      // Reposition on window resize
+      let resizeTimeout;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+          renderPublications(publications);
+        }, 250);
+      });
+    }
+
+    // Initialize when DOM is loaded
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM loaded, initializing...');
+        loadPublications();
+      });
+    } else {
+      // DOM already loaded
+      loadPublications();
+    }
+  </script>
 </body>
 
 </html>
