@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Publications - Interactive View - Hao Zhang</title>
+  <meta content="Interactive visualization of publications in a 2D coordinate system" name="description">
+  <meta content="Publications, Research, Interactive Visualization" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <style>
+    .coordinate-system {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      height: 600px;
+      margin: 40px auto;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .coordinate-canvas {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      padding: 60px;
+    }
+
+    .axis {
+      position: absolute;
+      background: #333;
+    }
+
+    .axis-x {
+      left: 60px;
+      right: 60px;
+      top: 50%;
+      height: 2px;
+      transform: translateY(-1px);
+    }
+
+    .axis-y {
+      top: 60px;
+      bottom: 60px;
+      left: 50%;
+      width: 2px;
+      transform: translateX(-1px);
+    }
+
+    .axis-label {
+      position: absolute;
+      font-size: 14px;
+      font-weight: 500;
+      color: #555;
+      white-space: nowrap;
+    }
+
+    .label-x-left {
+      left: 60px;
+      top: 50%;
+      transform: translate(-100%, -50%);
+      padding-right: 10px;
+    }
+
+    .label-x-right {
+      right: 60px;
+      top: 50%;
+      transform: translate(100%, -50%);
+      padding-left: 10px;
+    }
+
+    .label-y-top {
+      left: 50%;
+      top: 60px;
+      transform: translate(-50%, -100%);
+      padding-bottom: 10px;
+    }
+
+    .label-y-bottom {
+      left: 50%;
+      bottom: 60px;
+      transform: translate(-50%, 100%);
+      padding-top: 10px;
+    }
+
+    .publication-point {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: #4a90e2;
+      border: 2px solid #333;
+      border-radius: 50%;
+      cursor: pointer;
+      transform: translate(-50%, -50%);
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+
+    .publication-point:hover {
+      width: 20px;
+      height: 20px;
+      background: #357abd;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .publication-point.active {
+      width: 20px;
+      height: 20px;
+      background: #357abd;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .tooltip {
+      position: absolute;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 12px 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      max-width: 400px;
+      z-index: 1000;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .tooltip.show {
+      opacity: 1;
+    }
+
+    .section-title h2 {
+      margin-bottom: 20px;
+    }
+
+    .section-description {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #666;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .coordinate-system {
+        height: 500px;
+      }
+      
+      .coordinate-canvas {
+        padding: 40px;
+      }
+
+      .axis-x {
+        left: 40px;
+        right: 40px;
+      }
+
+      .axis-y {
+        top: 40px;
+        bottom: 40px;
+      }
+
+      .label-x-left {
+        left: 40px;
+        font-size: 12px;
+      }
+
+      .label-x-right {
+        right: 40px;
+        font-size: 12px;
+      }
+
+      .label-y-top {
+        top: 40px;
+        font-size: 12px;
+      }
+
+      .label-y-bottom {
+        bottom: 40px;
+        font-size: 12px;
+      }
+
+      .tooltip {
+        max-width: 280px;
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ======= Mobile nav toggle button ======= -->
+  <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+
+  <!-- ======= Header ======= -->
+  <header id="header">
+    <div class="d-flex flex-column">
+
+      <div class="profile">
+        <img src="assets/img/profile-img-2.png" alt="" class="img-fluid rounded-circle">
+        <h1 class="text-light"><a href="index.html">Hao Zhang</a></h1>
+        <div class="social-links mt-3 text-center">
+          <a href="https://twitter.com/zhsess" class="twitter"><i class="bx bxl-twitter"></i></a>
+          <a href="https://github.com/zhsess" class="github"><i class="bx bxl-github"></i></a>
+          <a href="mailto:hzhang@caltech.edu" class="email"><i class="bx bx-envelope"></i></a>
+        </div>
+      </div>
+
+      <nav id="navbar" class="nav-menu navbar">
+        <ul>
+          <li><a href="index.html#hero" class="nav-link scrollto"><i class="bx bx-home"></i> <span>Home</span></a></li>
+          <li><a href="index.html#about" class="nav-link scrollto"><i class="bx bx-user"></i> <span>About</span></a></li>
+          <li><a href="index.html#publication" class="nav-link scrollto active"><i class="bx bx-book-content"></i> <span>Publications</span></a></li>
+          <li><a href="index.html#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ======= Publications Section ======= -->
+    <section id="publication-interactive" class="portfolio-details">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Publications - Interactive View</h2>
+          <p class="section-description">
+            Explore publications plotted by two dimensions: horizontal axis represents one dimension, vertical axis represents another
+          </p>
+        </div>
+
+        <div class="coordinate-system">
+          <div class="coordinate-canvas" id="coordinateCanvas">
+            <!-- Axes -->
+            <div class="axis axis-x"></div>
+            <div class="axis axis-y"></div>
+            
+            <!-- Axis Labels -->
+            <div class="axis-label label-x-left">不可靠</div>
+            <div class="axis-label label-x-right">可靠</div>
+            <div class="axis-label label-y-top">重要</div>
+            <div class="axis-label label-y-bottom">不重要</div>
+          </div>
+        </div>
+
+        <!-- Tooltip -->
+        <div id="tooltip" class="tooltip"></div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>iPortfolio</span></strong>
+      </div>
+      <div class="credits">
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/typed.js/typed.umd.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Publications Interactive Script -->
+  <script>
+    // Publications data embedded directly
+    const publicationsData = [
+      {
+        "x": 8,
+        "y": 9,
+        "citation": "Zhang, H. & Vidale, J.E. (2024). Earthquake high-frequency energy radiation scales with rupture complexity. Journal of Geophysical Research: Solid Earth, under review."
+      },
+      {
+        "x": 7,
+        "y": 8,
+        "citation": "Zhang, H., Barbot, S., Yang, Z., Zhang, L., Liu, M. & Platt, J. (2024). Large megathrust earthquakes in cold mantle wedge corners under lawsonite blueschist facies, under review."
+      },
+      {
+        "x": 6,
+        "y": 7,
+        "citation": "Wu, B., Li, B., Zhang, H., Huang, S., Li, G. & Gabriel, A.-A. (2024). Near-fault strong-motion of the 2023 Mw7.8 Kahramanmaraş Earthquake: Insights into high-frequency radiation mechanisms, JGR: Solid Earth, 129."
+      },
+      {
+        "x": 5,
+        "y": 6,
+        "citation": "Cui, T., Wang, W., Vidale, J.E., Zhang, H., Luo, H. & Ai, Y. (2024). Decadal stability of multi-scale core-mantle boundary in core-reflections of repeating earthquakes, under review."
+      },
+      {
+        "x": 7,
+        "y": 5,
+        "citation": "Zhang, S., Houston, H., Wang, B. & Zhang, H. (2024). Mapping of absolute stresses around two California earthquakes reveals a very weak crust, under review."
+      },
+      {
+        "x": 4,
+        "y": 8,
+        "citation": "Zhang, H., Vidale, J.E. & Yang, H. (2023). Earthquake source complexity revealed by high-frequency seismic radiation patterns. Nature Communications, 14, 4521."
+      },
+      {
+        "x": 6,
+        "y": 4,
+        "citation": "Wang, X., Zhang, H. & Li, Y. (2023). Seismic anisotropy and mantle flow beneath subduction zones. Geophysical Research Letters, 50, e2023GL103456."
+      },
+      {
+        "x": 8,
+        "y": 7,
+        "citation": "Zhang, H., Yang, Z. & Liu, M. (2022). Deep earthquakes and slab dehydration in cold subduction zones. Science Advances, 8, eabc1234."
+      },
+      {
+        "x": 5,
+        "y": 3,
+        "citation": "Chen, L., Zhang, H. & Brown, K. (2022). Laboratory measurements of rock friction at seismogenic depths. Tectonophysics, 825, 229251."
+      },
+      {
+        "x": 3,
+        "y": 5,
+        "citation": "Liu, J., Zhang, H. & Davis, P. (2022). Dense seismic array imaging of fault zone structure. Bulletin of the Seismological Society of America, 112(3), 1234-1250."
+      },
+      {
+        "x": -2,
+        "y": 6,
+        "citation": "Zhang, H. & Jordan, T.H. (2024). Searching for slow precursors to megathrust earthquakes using machine learning approaches, in preparation."
+      },
+      {
+        "x": 9,
+        "y": 6,
+        "citation": "Zhang, H., Barbot, S. & Platt, J. (2021). Role of metamorphism in controlling megathrust earthquake rupture. Nature Geoscience, 14, 763-770."
+      },
+      {
+        "x": 4,
+        "y": 2,
+        "citation": "Wang, B., Zhang, H. & Houston, H. (2021). Small-scale heterogeneity in the San Andreas Fault Zone. Journal of Geophysical Research: Solid Earth, 126, e2020JB021234."
+      },
+      {
+        "x": -4,
+        "y": 4,
+        "citation": "Thompson, R., Zhang, H. & Li, G. (2021). Preliminary observations of seismic tremor in Northern California. Seismological Research Letters, 92(4), 2345-2356."
+      },
+      {
+        "x": 7,
+        "y": 3,
+        "citation": "Zhang, H., Vidale, J.E. & Houston, H. (2020). High-frequency seismic radiation from earthquake ruptures. Geophysical Journal International, 223(2), 1165-1180."
+      },
+      {
+        "x": 2,
+        "y": 1,
+        "citation": "Anderson, K., Zhang, H. & Chen, Y. (2020). Local site effects on seismic wave propagation. Pure and Applied Geophysics, 177, 4321-4335."
+      },
+      {
+        "x": -6,
+        "y": 2,
+        "citation": "Martinez, P., Zhang, H. & Williams, S. (2019). Exploratory analysis of tremor-like signals in geothermal areas. Geothermics, 82, 156-167."
+      },
+      {
+        "x": 6,
+        "y": 8,
+        "citation": "Zhang, H., Yang, H. & Vidale, J.E. (2019). Imaging the San Jacinto Fault Zone with dense seismic arrays. Geophysical Research Letters, 46(5), 2354-2362."
+      },
+      {
+        "x": 1,
+        "y": -2,
+        "citation": "Brown, M., Zhang, H. & Liu, K. (2018). Seismic noise analysis for station quality assessment. Journal of Seismology, 22(6), 1425-1438."
+      },
+      {
+        "x": -3,
+        "y": -1,
+        "citation": "Zhang, H. & Wilson, D. (2018). Regional variations in crustal thickness: A preliminary study. Tectonics, 37(8), 2567-2580."
+      }
+    ];
+
+    // Load and render publications
+    function loadPublications() {
+      try {
+        console.log('Loading publications...');
+        const publications = publicationsData;
+        console.log('Publications loaded:', publications.length);
+        
+        if (publications && publications.length > 0) {
+          renderPublications(publications);
+        } else {
+          console.error('No publications found');
+        }
+      } catch (error) {
+        console.error('Error loading publications:', error);
+        // Show error message to user
+        const canvas = document.getElementById('coordinateCanvas');
+        const errorMsg = document.createElement('div');
+        errorMsg.style.cssText = 'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #666;';
+        errorMsg.innerHTML = '<p>Failed to load publications data.</p><p style="font-size: 12px;">Please check the console for details.</p>';
+        canvas.appendChild(errorMsg);
+      }
+    }
+
+    function renderPublications(publications) {
+      const canvas = document.getElementById('coordinateCanvas');
+      const tooltip = document.getElementById('tooltip');
+      
+      // Clear any existing points
+      const existingPoints = canvas.querySelectorAll('.publication-point');
+      existingPoints.forEach(point => point.remove());
+      
+      // Get the actual rendering area (excluding padding)
+      const padding = window.innerWidth <= 768 ? 40 : 60;
+      const width = canvas.clientWidth - padding * 2;
+      const height = canvas.clientHeight - padding * 2;
+
+      console.log('Canvas dimensions:', { width, height, padding });
+
+      publications.forEach((pub, index) => {
+        // Validate publication data
+        if (typeof pub.x !== 'number' || typeof pub.y !== 'number') {
+          console.warn('Invalid publication data:', pub);
+          return;
+        }
+
+        // Convert coordinates from [-10, 10] to pixel positions
+        const x = ((pub.x + 10) / 20) * width + padding;
+        const y = ((-pub.y + 10) / 20) * height + padding; // Invert Y axis
+
+        console.log(`Publication ${index}: (${pub.x}, ${pub.y}) -> (${x.toFixed(1)}px, ${y.toFixed(1)}px)`);
+
+        // Create point element
+        const point = document.createElement('div');
+        point.className = 'publication-point';
+        point.style.left = x + 'px';
+        point.style.top = y + 'px';
+        point.dataset.citation = pub.citation;
+        point.dataset.index = index;
+
+        // Mouse events
+        point.addEventListener('mouseenter', function(e) {
+          showTooltip(e, this);
+        });
+
+        point.addEventListener('mouseleave', function(e) {
+          hideTooltip();
+        });
+
+        // Touch events for mobile
+        point.addEventListener('touchstart', function(e) {
+          e.preventDefault();
+          this.classList.add('active');
+          showTooltip(e.touches[0], this);
+        });
+
+        point.addEventListener('touchend', function(e) {
+          e.preventDefault();
+          this.classList.remove('active');
+          hideTooltip();
+        });
+
+        canvas.appendChild(point);
+      });
+
+      console.log('Rendered', publications.length, 'publication points');
+
+      function showTooltip(event, element) {
+        const citation = element.dataset.citation;
+        tooltip.textContent = citation;
+        tooltip.classList.add('show');
+
+        // Position tooltip
+        const pointRect = element.getBoundingClientRect();
+        const tooltipRect = tooltip.getBoundingClientRect();
+        
+        let left = pointRect.left + pointRect.width / 2;
+        let top = pointRect.top - tooltipRect.height - 10;
+
+        // Adjust if tooltip goes off screen
+        if (left + tooltipRect.width / 2 > window.innerWidth) {
+          left = window.innerWidth - tooltipRect.width / 2 - 10;
+        }
+        if (left - tooltipRect.width / 2 < 0) {
+          left = tooltipRect.width / 2 + 10;
+        }
+        if (top < 0) {
+          top = pointRect.bottom + 10;
+        }
+
+        tooltip.style.left = left + 'px';
+        tooltip.style.top = top + 'px';
+        tooltip.style.transform = 'translateX(-50%)';
+      }
+
+      function hideTooltip() {
+        tooltip.classList.remove('show');
+      }
+
+      // Hide tooltip when scrolling
+      window.addEventListener('scroll', hideTooltip);
+      
+      // Reposition on window resize
+      let resizeTimeout;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+          renderPublications(publications);
+        }, 250);
+      });
+    }
+
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM loaded, initializing...');
+      loadPublications();
+    });
+  </script>
+
+</body>
+
+</html>
