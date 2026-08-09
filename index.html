@@ -33,6 +33,14 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+  <!-- Prevent theme flash -->
+  <script>
+    (function () {
+      var theme = localStorage.getItem('theme') || 'dark';
+      if (theme === 'light') document.documentElement.setAttribute('data-theme', 'light');
+    })();
+  </script>
+
   <!-- Publications Interactive CSS -->
   <style>
     .coordinate-system {
@@ -41,7 +49,7 @@
       max-width: 700px;
       height: 700px;
       margin: 40px auto;
-      background: #313244d5;
+      background: color-mix(in srgb, var(--ctp-surface0) 85%, transparent);
       border-radius: 8px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     }
@@ -55,7 +63,7 @@
 
     .axis {
       position: absolute;
-      background: #89b4fa;
+      background: var(--ctp-blue);
     }
 
     .axis-x {
@@ -78,7 +86,7 @@
       position: absolute;
       font-size: 14px;
       font-weight: bold;
-      color: #a6adc8;
+      color: var(--ctp-subtext0);
       white-space: nowrap;
     }
 
@@ -114,8 +122,8 @@
       position: absolute;
       width: 20px;
       height: 20px;
-      background: #89b4fa;
-      border: 2px solid #89b4fa;
+      background: var(--ctp-blue);
+      border: 2px solid var(--ctp-blue);
       border-radius: 50%;
       cursor: pointer;
       transform: translate(-50%, -50%);
@@ -124,33 +132,33 @@
     }
 
     .publication-point.published {
-      background: #89b4fa;
+      background: var(--ctp-blue);
     }
 
     .publication-point.in-review {
-      background: #fab387;
+      background: var(--ctp-peach);
     }
 
     .publication-point.in-prep {
-      background: #a6adc8;
+      background: var(--ctp-subtext0);
     }
 
     .publication-point:hover {
       width: 26px;
       height: 26px;
-      box-shadow: 0 2px 8px rgba(137, 180, 250, 0.4);
+      box-shadow: 0 2px 8px rgba(var(--ctp-blue-rgb), 0.4);
     }
 
     .publication-point.published:hover {
-      background: #74c7ec;
+      background: var(--ctp-sky);
     }
 
     .publication-point.in-review:hover {
-      background: #f8bd96;
+      background: color-mix(in srgb, var(--ctp-peach) 85%, white);
     }
 
     .publication-point.in-prep:hover {
-      background: #bac2de;
+      background: color-mix(in srgb, var(--ctp-subtext0) 85%, white);
     }
 
     .publication-point.active {
@@ -162,7 +170,7 @@
     .publication-label {
       position: absolute;
       font-size: 12px;
-      color: #cdd6f4;
+      color: var(--ctp-text);
       text-align: center;
       white-space: nowrap;
       pointer-events: none;
@@ -170,7 +178,7 @@
       margin-top: 18px;
       font-weight: 500;
       z-index: 9;
-      background: rgba(49, 50, 68, 0.9);
+      background: rgba(var(--ctp-surface0-rgb), 0.9);
       padding: 2px 6px;
       border-radius: 3px;
     }
@@ -178,7 +186,7 @@
     .quadrant-message {
       position: absolute;
       font-size: 16px;
-      color: #a6adc8;
+      color: var(--ctp-subtext0);
       text-align: center;
       font-weight: bold;
       line-height: 1.5;
@@ -192,7 +200,7 @@
       top: 30px;
       left: 30px;
       z-index: 20;
-      background: rgba(49, 50, 68, 0.95);
+      background: rgba(var(--ctp-surface0-rgb), 0.95);
       padding: 12px 16px;
       border-radius: 6px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
@@ -212,21 +220,21 @@
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      border: 2px solid #89b4fa;
+      border: 2px solid var(--ctp-blue);
       margin-right: 10px;
       flex-shrink: 0;
     }
 
     .legend-dot.published {
-      background: #89b4fa;
+      background: var(--ctp-blue);
     }
 
     .legend-dot.in-review {
-      background: #fab387;
+      background: var(--ctp-peach);
     }
 
     .legend-dot.in-prep {
-      background: #a6adc8;
+      background: var(--ctp-subtext0);
     }
 
     .publication-list li {
@@ -241,14 +249,14 @@
 
     .legend-text {
       font-size: 13px;
-      color: #cdd6f4;
+      color: var(--ctp-text);
       font-weight: 500;
     }
 
     .tooltip {
       position: fixed;
-      background: #313244;
-      border: 1px solid #45475a;
+      background: var(--ctp-surface0);
+      border: 1px solid var(--ctp-surface1);
       border-radius: 6px;
       padding: 12px 16px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
@@ -259,11 +267,11 @@
       transition: opacity 0.2s ease;
       font-size: 13px;
       line-height: 1.6;
-      color: #cdd6f4;
+      color: var(--ctp-text);
     }
 
     .tooltip a {
-      color: #89b4fa;
+      color: var(--ctp-blue);
       text-decoration: none;
       word-break: break-all;
     }
@@ -406,7 +414,11 @@
                 d="M121.037 298.667c23.968-50.453 75.392-85.334 134.963-85.334s110.995 34.881 134.963 85.334H121.037z" />
             </svg>
           </a>
-          <a href="assets/file/CV_HZ.pdf" class="cv" target="_blank"><i class="bx bx-file"></i></a>
+          <a href="assets/file/CV_HZ.pdf" class="cv" target="_blank" title="CV"><i class="bx bx-file"></i></a>
+          <a href="#" class="theme-toggle" id="theme-toggle" title="Toggle theme" aria-label="Toggle theme">
+            <i class="bx bx-moon theme-icon-moon"></i>
+            <i class="bx bx-sun theme-icon-sun"></i>
+          </a>
         </div>
       </div>
 
@@ -462,7 +474,7 @@
 
           <div class="col-lg-5 pt-4 pt-lg-0 " data-aos="fade-left">
             <img src="assets/img/dinner.jpeg" class="img-fluid" alt="">
-            <p class="text-center mt-2" style="color: #6c757d; font-size: 0.9rem; font-style: italic;">Dinner with
+            <p class="text-center mt-2" style="color: var(--ctp-overlay0); font-size: 0.9rem; font-style: italic;">Dinner with
               Heidi, John, Yehuda and Tom after my PhD defense</p>
           </div>
 

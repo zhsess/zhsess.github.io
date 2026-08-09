@@ -9,6 +9,30 @@
   "use strict";
 
   /**
+   * Theme toggle (Catppuccin Mocha / Latte)
+   */
+  const getTheme = () => localStorage.getItem('theme') || 'dark';
+
+  const applyTheme = (theme) => {
+    if (theme === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    localStorage.setItem('theme', theme);
+  };
+
+  applyTheme(getTheme());
+
+  const themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      applyTheme(getTheme() === 'light' ? 'dark' : 'light');
+    });
+  }
+
+  /**
    * Easy selector helper function
    */
   const select = (el, all = false) => {
