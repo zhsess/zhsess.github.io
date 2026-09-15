@@ -1119,6 +1119,127 @@ section {
 }
 
 /*--------------------------------------------------------------
+# Photos
+--------------------------------------------------------------*/
+.photos .photos-carousel {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.photos .photos-slider {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  padding-bottom: 8px;
+}
+
+.photos .swiper-slide {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.photos .swiper-slide figure {
+  margin: 0;
+  text-align: center;
+}
+
+.photos .swiper-slide img {
+  display: block;
+  width: 100%;
+  max-height: 520px;
+  object-fit: contain;
+  border-radius: 6px;
+  background: var(--ctp-surface0);
+  margin: 0 auto;
+}
+
+.photos .swiper-slide figcaption {
+  margin-top: 14px;
+  padding: 0 12px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ctp-subtext0);
+}
+
+.photos .photos-prev,
+.photos .photos-next {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  color: var(--ctp-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  border-radius: 50%;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.photos .photos-prev i,
+.photos .photos-next i {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.photos .photos-prev:hover,
+.photos .photos-next:hover {
+  color: var(--ctp-blue);
+  background: rgba(var(--ctp-surface0-rgb), 0.6);
+}
+
+.photos .photos-pagination {
+  position: relative !important;
+  bottom: auto !important;
+  margin-top: 16px;
+}
+
+.photos .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: #9ca0b0;
+  opacity: 1;
+  margin: 0 5px !important;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.photos .swiper-pagination-bullet-active {
+  background: #000000;
+  transform: scale(1.15);
+}
+
+@media (max-width: 768px) {
+  .photos .photos-carousel {
+    gap: 2px;
+  }
+
+  .photos .swiper-slide img {
+    max-height: 360px;
+  }
+
+  .photos .swiper-slide figcaption {
+    font-size: 13px;
+  }
+
+  .photos .photos-prev,
+  .photos .photos-next {
+    width: 32px;
+    height: 32px;
+  }
+
+  .photos .photos-prev i,
+  .photos .photos-next i {
+    font-size: 26px;
+  }
+}
+
+/*--------------------------------------------------------------
 # Contact
 --------------------------------------------------------------*/
 .contact {

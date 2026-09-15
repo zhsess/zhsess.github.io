@@ -221,6 +221,30 @@
   });
 
   /**
+   * Photos slider
+   */
+  new Swiper('.photos-slider', {
+    speed: 600,
+    loop: true,
+    slidesPerView: 1,
+    spaceBetween: 0,
+    watchOverflow: true,
+    roundLengths: true,
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false
+    },
+    navigation: {
+      nextEl: '.photos-next',
+      prevEl: '.photos-prev'
+    },
+    pagination: {
+      el: '.photos-pagination',
+      clickable: true
+    }
+  });
+
+  /**
    * Portfolio details slider
    */
   new Swiper('.portfolio-details-slider', {
