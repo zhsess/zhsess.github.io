@@ -8,27 +8,43 @@
 (function() {
   "use strict";
 
-  /**
-   * Theme toggle (Catppuccin Mocha / Latte)
-   */
-  const getTheme = () => localStorage.getItem('theme') || 'dark';
+  const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const applyTheme = (theme) => {
+  /**
+   * Theme toggle (Catppuccin Mocha / Latte).
+   * Uses the saved choice; otherwise follows the system setting.
+   */
+  const store = {
+    get: (k) => { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} }
+  };
+  const systemTheme = () =>
+    window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  const getTheme = () => store.get('theme') || systemTheme();
+
+  const applyTheme = (theme, persist) => {
     if (theme === 'light') {
       document.documentElement.setAttribute('data-theme', 'light');
     } else {
       document.documentElement.removeAttribute('data-theme');
     }
-    localStorage.setItem('theme', theme);
+    if (persist) store.set('theme', theme);
   };
 
-  applyTheme(getTheme());
+  applyTheme(getTheme(), false);
+
+  // Follow system changes until the visitor picks a theme manually
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
+      if (!store.get('theme')) applyTheme(systemTheme(), false);
+    });
+  }
 
   const themeToggle = document.getElementById('theme-toggle');
   if (themeToggle) {
     themeToggle.addEventListener('click', (e) => {
       e.preventDefault();
-      applyTheme(getTheme() === 'light' ? 'dark' : 'light');
+      applyTheme(getTheme() === 'light' ? 'dark' : 'light', true);
     });
   }
 
@@ -62,7 +78,7 @@
    * Easy on scroll event listener 
    */
   const onscroll = (el, listener) => {
-    el.addEventListener('scroll', listener)
+    el.addEventListener('scroll', listener, { passive: true })
   }
 
   /**
@@ -92,7 +108,7 @@
     let elementPos = select(el).offsetTop
     window.scrollTo({
       top: elementPos,
-      behavior: 'smooth'
+      behavior: reducedMotion ? 'auto' : 'smooth'
     })
   }
 
@@ -113,16 +129,27 @@
   }
 
   /**
-   * Mobile nav toggle
+   * Mobile nav toggle (click or keyboard)
    */
-  on('click', '.mobile-nav-toggle', function(e) {
+  const mobileToggle = select('.mobile-nav-toggle')
+  const toggleMobileNav = () => {
     select('body').classList.toggle('mobile-nav-active')
-    this.classList.toggle('bi-list')
-    this.classList.toggle('bi-x')
-  })
+    mobileToggle.classList.toggle('bi-list')
+    mobileToggle.classList.toggle('bi-x')
+    mobileToggle.setAttribute('aria-expanded', mobileToggle.classList.contains('bi-x') ? 'true' : 'false')
+  }
+  if (mobileToggle) {
+    mobileToggle.addEventListener('click', toggleMobileNav)
+    mobileToggle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault()
+        toggleMobileNav()
+      }
+    })
+  }
 
   /**
-   * Scrool with ofset on links with a class name .scrollto
+   * Scroll with offset on links with a class name .scrollto
    */
   on('click', '.scrollto', function(e) {
     if (select(this.hash)) {
@@ -130,17 +157,14 @@
 
       let body = select('body')
       if (body.classList.contains('mobile-nav-active')) {
-        body.classList.remove('mobile-nav-active')
-        let navbarToggle = select('.mobile-nav-toggle')
-        navbarToggle.classList.toggle('bi-list')
-        navbarToggle.classList.toggle('bi-x')
+        toggleMobileNav()
       }
       scrollto(this.hash)
     }
   }, true)
 
   /**
-   * Scroll with ofset on page load with hash links in the url
+   * Scroll with offset on page load with hash links in the url
    */
   window.addEventListener('load', () => {
     if (window.location.hash) {
@@ -151,160 +175,62 @@
   });
 
   /**
-   * Hero type effect
+   * Hero type effect (static text when reduced motion is requested)
    */
   const typed = select('.typed')
   if (typed) {
-    let typed_strings = typed.getAttribute('data-typed-items')
-    typed_strings = typed_strings.split(',')
-    new Typed('.typed', {
-      strings: typed_strings,
-      loop: true,
-      typeSpeed: 100,
-      backSpeed: 50,
-      backDelay: 2000
-    });
-  }
-
-  /**
-   * Skills animation
-   */
-  let skilsContent = select('.skills-content');
-  if (skilsContent) {
-    new Waypoint({
-      element: skilsContent,
-      offset: '80%',
-      handler: function(direction) {
-        let progress = select('.progress .progress-bar', true);
-        progress.forEach((el) => {
-          el.style.width = el.getAttribute('aria-valuenow') + '%'
-        });
-      }
-    })
-  }
-
-  /**
-   * Porfolio isotope and filter
-   */
-  window.addEventListener('load', () => {
-    let portfolioContainer = select('.portfolio-container');
-    if (portfolioContainer) {
-      let portfolioIsotope = new Isotope(portfolioContainer, {
-        itemSelector: '.portfolio-item'
+    let typed_strings = typed.getAttribute('data-typed-items').split(',').map(s => s.trim())
+    if (reducedMotion || typeof Typed === 'undefined') {
+      typed.textContent = typed_strings.join(', ')
+    } else {
+      new Typed('.typed', {
+        strings: typed_strings,
+        loop: true,
+        typeSpeed: 100,
+        backSpeed: 50,
+        backDelay: 2000
       });
-
-      let portfolioFilters = select('#portfolio-flters li', true);
-
-      on('click', '#portfolio-flters li', function(e) {
-        e.preventDefault();
-        portfolioFilters.forEach(function(el) {
-          el.classList.remove('filter-active');
-        });
-        this.classList.add('filter-active');
-
-        portfolioIsotope.arrange({
-          filter: this.getAttribute('data-filter')
-        });
-        portfolioIsotope.on('arrangeComplete', function() {
-          AOS.refresh()
-        });
-      }, true);
     }
-
-  });
-
-  /**
-   * Initiate portfolio lightbox 
-   */
-  const portfolioLightbox = GLightbox({
-    selector: '.portfolio-lightbox'
-  });
+  }
 
   /**
    * Photos slider
    */
-  new Swiper('.photos-slider', {
-    speed: 600,
-    loop: true,
-    slidesPerView: 1,
-    spaceBetween: 0,
-    watchOverflow: true,
-    roundLengths: true,
-    autoplay: {
-      delay: 4000,
-      disableOnInteraction: false
-    },
-    navigation: {
-      nextEl: '.photos-next',
-      prevEl: '.photos-prev'
-    },
-    pagination: {
-      el: '.photos-pagination',
-      clickable: true
-    }
-  });
-
-  /**
-   * Portfolio details slider
-   */
-  new Swiper('.portfolio-details-slider', {
-    speed: 400,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
-    }
-  });
-
-  /**
-   * Testimonials slider
-   */
-  new Swiper('.testimonials-slider', {
-    speed: 600,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    slidesPerView: 'auto',
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
-    },
-    breakpoints: {
-      320: {
-        slidesPerView: 1,
-        spaceBetween: 20
+  if (typeof Swiper !== 'undefined' && select('.photos-slider')) {
+    new Swiper('.photos-slider', {
+      speed: reducedMotion ? 0 : 600,
+      loop: true,
+      slidesPerView: 1,
+      spaceBetween: 0,
+      watchOverflow: true,
+      roundLengths: true,
+      autoplay: reducedMotion ? false : {
+        delay: 4000,
+        disableOnInteraction: false
       },
-
-      1200: {
-        slidesPerView: 3,
-        spaceBetween: 20
+      navigation: {
+        nextEl: '.photos-next',
+        prevEl: '.photos-prev'
+      },
+      pagination: {
+        el: '.photos-pagination',
+        clickable: true
       }
-    }
-  });
+    });
+  }
 
   /**
    * Animation on scroll
    */
   window.addEventListener('load', () => {
+    if (typeof AOS === 'undefined') return
     AOS.init({
       duration: 1000,
       easing: 'ease-in-out',
       once: true,
-      mirror: false
+      mirror: false,
+      disable: reducedMotion
     })
   });
-
-  /**
-   * Initiate Pure Counter 
-   */
-  new PureCounter();
 
 })()

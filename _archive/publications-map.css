@@ -1,0 +1,315 @@
+/* Archived: styles for the interactive publication coordinate map (currently commented out in index.html). */
+    .coordinate-system {
+      position: relative;
+      width: 100%;
+      max-width: 700px;
+      height: 700px;
+      margin: 40px auto;
+      background: color-mix(in srgb, var(--ctp-surface0) 85%, transparent);
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .coordinate-canvas {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      padding: 60px;
+    }
+
+    .axis {
+      position: absolute;
+      background: var(--ctp-blue);
+    }
+
+    .axis-x {
+      left: 60px;
+      right: 60px;
+      top: 50%;
+      height: 2px;
+      transform: translateY(-1px);
+    }
+
+    .axis-y {
+      top: 60px;
+      bottom: 60px;
+      left: 50%;
+      width: 2px;
+      transform: translateX(-1px);
+    }
+
+    .axis-label {
+      position: absolute;
+      font-size: 14px;
+      font-weight: bold;
+      color: var(--ctp-subtext0);
+      white-space: nowrap;
+    }
+
+    .label-x-left {
+      left: 80px;
+      top: 50%;
+      transform: translate(-100%, -50%) translateY(20px) translateX(15px);
+      padding-right: 10px;
+    }
+
+    .label-x-right {
+      right: 80px;
+      top: 50%;
+      transform: translate(100%, -50%) translateY(20px) translateX(-15px);
+      padding-left: 10px;
+    }
+
+    .label-y-top {
+      left: 50%;
+      top: 60px;
+      transform: translate(-50%, -100%);
+      padding-bottom: 10px;
+    }
+
+    .label-y-bottom {
+      left: 50%;
+      bottom: 60px;
+      transform: translate(-50%, 100%);
+      padding-top: 10px;
+    }
+
+    .publication-point {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: var(--ctp-blue);
+      border: 2px solid var(--ctp-blue);
+      border-radius: 50%;
+      cursor: pointer;
+      transform: translate(-50%, -50%);
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+
+    .publication-point.published {
+      background: var(--ctp-blue);
+    }
+
+    .publication-point.in-review {
+      background: var(--ctp-peach);
+    }
+
+    .publication-point.in-prep {
+      background: var(--ctp-subtext0);
+    }
+
+    .publication-point:hover {
+      width: 26px;
+      height: 26px;
+      box-shadow: 0 2px 8px rgba(var(--ctp-blue-rgb), 0.4);
+    }
+
+    .publication-point.published:hover {
+      background: var(--ctp-sky);
+    }
+
+    .publication-point.in-review:hover {
+      background: color-mix(in srgb, var(--ctp-peach) 85%, white);
+    }
+
+    .publication-point.in-prep:hover {
+      background: color-mix(in srgb, var(--ctp-subtext0) 85%, white);
+    }
+
+    .publication-point.active {
+      width: 26px;
+      height: 26px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .publication-label {
+      position: absolute;
+      font-size: 12px;
+      color: var(--ctp-text);
+      text-align: center;
+      white-space: nowrap;
+      pointer-events: none;
+      transform: translate(-50%, 0);
+      margin-top: 18px;
+      font-weight: 500;
+      z-index: 9;
+      background: rgba(var(--ctp-surface0-rgb), 0.9);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    .quadrant-message {
+      position: absolute;
+      font-size: 16px;
+      color: var(--ctp-subtext0);
+      text-align: center;
+      font-weight: bold;
+      line-height: 1.5;
+      max-width: 200px;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .legend {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      z-index: 20;
+      background: rgba(var(--ctp-surface0-rgb), 0.95);
+      padding: 12px 16px;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .legend-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .legend-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid var(--ctp-blue);
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .legend-dot.published {
+      background: var(--ctp-blue);
+    }
+
+    .legend-dot.in-review {
+      background: var(--ctp-peach);
+    }
+
+    .legend-dot.in-prep {
+      background: var(--ctp-subtext0);
+    }
+
+    .publication-list li {
+      margin-top: 8px;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .publication-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .legend-text {
+      font-size: 13px;
+      color: var(--ctp-text);
+      font-weight: 500;
+    }
+
+    .tooltip {
+      position: fixed;
+      background: var(--ctp-surface0);
+      border: 1px solid var(--ctp-surface1);
+      border-radius: 6px;
+      padding: 12px 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      max-width: 400px;
+      z-index: 1000;
+      pointer-events: auto;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--ctp-text);
+    }
+
+    .tooltip a {
+      color: var(--ctp-blue);
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .tooltip a:hover {
+      text-decoration: underline;
+    }
+
+    .tooltip.show {
+      opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+      .coordinate-system {
+        height: 500px;
+      }
+
+      .coordinate-canvas {
+        padding: 40px;
+      }
+
+      .axis-x {
+        left: 40px;
+        right: 40px;
+      }
+
+      .axis-y {
+        top: 40px;
+        bottom: 40px;
+      }
+
+      .label-x-left {
+        left: 40px;
+        font-size: 12px;
+        transform: translate(-100%, -50%) translateY(12px) translateX(20px);
+      }
+
+      .label-x-right {
+        right: 40px;
+        font-size: 12px;
+        transform: translate(100%, -50%) translateY(12px) translateX(-20px);
+      }
+
+      .label-y-top {
+        top: 40px;
+        font-size: 12px;
+      }
+
+      .label-y-bottom {
+        bottom: 40px;
+        font-size: 12px;
+      }
+
+      .tooltip {
+        max-width: 280px;
+        font-size: 12px;
+      }
+
+      .publication-label {
+        font-size: 10px;
+        margin-top: 15px;
+      }
+
+      .quadrant-message {
+        font-size: 14px;
+        max-width: 150px;
+      }
+
+      .legend {
+        top: 50px;
+        left: 50px;
+        padding: 10px 12px;
+      }
+
+      .legend-text {
+        font-size: 11px;
+      }
+
+      .legend-dot {
+        width: 14px;
+        height: 14px;
+      }
+    }
+
+    

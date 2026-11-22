@@ -6,375 +6,69 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>Hao Zhang - Geophysicist at Caltech</title>
-  <meta
-    content="Hao Zhang - Postdoctoral Researcher in Geophysics at Caltech Seismological Laboratory. Research on earthquake source properties, Earth's structure, and seismic array observations."
-    name="description">
-  <meta
-    content="Hao Zhang, Geophysics, Seismology, Caltech, Earthquake, Earth Structure, Seismic Array, Subduction Zones, Fault Zones"
-    name="keywords">
+  <meta content="Hao Zhang - Postdoctoral Researcher in Geophysics at Caltech Seismological Laboratory. Research on earthquake source properties, Earth's structure, and seismic array observations." name="description">
+  <meta name="author" content="Hao Zhang">
+  <link rel="canonical" href="https://zhsess.github.io/">
+  <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Hao Zhang">
+  <meta property="og:title" content="Hao Zhang - Geophysicist at Caltech">
+  <meta property="og:description" content="Hao Zhang - Postdoctoral Researcher in Geophysics at Caltech Seismological Laboratory. Research on earthquake source properties, Earth's structure, and seismic array observations.">
+  <meta property="og:url" content="https://zhsess.github.io/">
+  <meta property="og:image" content="https://zhsess.github.io/assets/img/og-profile.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Hao Zhang - Geophysicist at Caltech">
+  <meta name="twitter:description" content="Hao Zhang - Postdoctoral Researcher in Geophysics at Caltech Seismological Laboratory. Research on earthquake source properties, Earth's structure, and seismic array observations.">
+  <meta name="twitter:image" content="https://zhsess.github.io/assets/img/og-profile.jpg">
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Hao Zhang",
+    "jobTitle": "Postdoctoral Researcher",
+    "affiliation": { "@type": "Organization", "name": "Seismological Laboratory, California Institute of Technology" },
+    "url": "https://zhsess.github.io/",
+    "image": "https://zhsess.github.io/assets/img/og-profile.jpg",
+    "knowsAbout": ["Seismology", "Geophysics", "Glaciology", "Earthquake physics"],
+    "sameAs": ["https://github.com/zhsess", "https://scholar.google.com/citations?hl=en&user=-yE8wYsAAAAJ"]
+  }
+  </script>
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Poppins:wght@400;500;600;700&family=Raleway:wght@400;600;700&display=swap"
     rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.min.css" rel="stylesheet">
   <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
-  <!-- Prevent theme flash -->
+  <!-- Prevent theme flash (saved choice, otherwise follow the system setting) -->
   <script>
     (function () {
-      var theme = localStorage.getItem('theme') || 'dark';
+      var theme = null;
+      try { theme = localStorage.getItem('theme'); } catch (e) {}
+      if (!theme) theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
       if (theme === 'light') document.documentElement.setAttribute('data-theme', 'light');
     })();
   </script>
-
-  <!-- Publications Interactive CSS -->
-  <style>
-    .coordinate-system {
-      position: relative;
-      width: 100%;
-      max-width: 700px;
-      height: 700px;
-      margin: 40px auto;
-      background: color-mix(in srgb, var(--ctp-surface0) 85%, transparent);
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    }
-
-    .coordinate-canvas {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      padding: 60px;
-    }
-
-    .axis {
-      position: absolute;
-      background: var(--ctp-blue);
-    }
-
-    .axis-x {
-      left: 60px;
-      right: 60px;
-      top: 50%;
-      height: 2px;
-      transform: translateY(-1px);
-    }
-
-    .axis-y {
-      top: 60px;
-      bottom: 60px;
-      left: 50%;
-      width: 2px;
-      transform: translateX(-1px);
-    }
-
-    .axis-label {
-      position: absolute;
-      font-size: 14px;
-      font-weight: bold;
-      color: var(--ctp-subtext0);
-      white-space: nowrap;
-    }
-
-    .label-x-left {
-      left: 80px;
-      top: 50%;
-      transform: translate(-100%, -50%) translateY(20px) translateX(15px);
-      padding-right: 10px;
-    }
-
-    .label-x-right {
-      right: 80px;
-      top: 50%;
-      transform: translate(100%, -50%) translateY(20px) translateX(-15px);
-      padding-left: 10px;
-    }
-
-    .label-y-top {
-      left: 50%;
-      top: 60px;
-      transform: translate(-50%, -100%);
-      padding-bottom: 10px;
-    }
-
-    .label-y-bottom {
-      left: 50%;
-      bottom: 60px;
-      transform: translate(-50%, 100%);
-      padding-top: 10px;
-    }
-
-    .publication-point {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: var(--ctp-blue);
-      border: 2px solid var(--ctp-blue);
-      border-radius: 50%;
-      cursor: pointer;
-      transform: translate(-50%, -50%);
-      transition: all 0.2s ease;
-      z-index: 10;
-    }
-
-    .publication-point.published {
-      background: var(--ctp-blue);
-    }
-
-    .publication-point.in-review {
-      background: var(--ctp-peach);
-    }
-
-    .publication-point.in-prep {
-      background: var(--ctp-subtext0);
-    }
-
-    .publication-point:hover {
-      width: 26px;
-      height: 26px;
-      box-shadow: 0 2px 8px rgba(var(--ctp-blue-rgb), 0.4);
-    }
-
-    .publication-point.published:hover {
-      background: var(--ctp-sky);
-    }
-
-    .publication-point.in-review:hover {
-      background: color-mix(in srgb, var(--ctp-peach) 85%, white);
-    }
-
-    .publication-point.in-prep:hover {
-      background: color-mix(in srgb, var(--ctp-subtext0) 85%, white);
-    }
-
-    .publication-point.active {
-      width: 26px;
-      height: 26px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .publication-label {
-      position: absolute;
-      font-size: 12px;
-      color: var(--ctp-text);
-      text-align: center;
-      white-space: nowrap;
-      pointer-events: none;
-      transform: translate(-50%, 0);
-      margin-top: 18px;
-      font-weight: 500;
-      z-index: 9;
-      background: rgba(var(--ctp-surface0-rgb), 0.9);
-      padding: 2px 6px;
-      border-radius: 3px;
-    }
-
-    .quadrant-message {
-      position: absolute;
-      font-size: 16px;
-      color: var(--ctp-subtext0);
-      text-align: center;
-      font-weight: bold;
-      line-height: 1.5;
-      max-width: 200px;
-      pointer-events: none;
-      z-index: 5;
-    }
-
-    .legend {
-      position: absolute;
-      top: 30px;
-      left: 30px;
-      z-index: 20;
-      background: rgba(var(--ctp-surface0-rgb), 0.95);
-      padding: 12px 16px;
-      border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-
-    .legend-item:last-child {
-      margin-bottom: 0;
-    }
-
-    .legend-dot {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      border: 2px solid var(--ctp-blue);
-      margin-right: 10px;
-      flex-shrink: 0;
-    }
-
-    .legend-dot.published {
-      background: var(--ctp-blue);
-    }
-
-    .legend-dot.in-review {
-      background: var(--ctp-peach);
-    }
-
-    .legend-dot.in-prep {
-      background: var(--ctp-subtext0);
-    }
-
-    .publication-list li {
-      margin-top: 8px;
-      margin-bottom: 8px;
-      line-height: 1.2;
-    }
-
-    .publication-list li:last-child {
-      margin-bottom: 0;
-    }
-
-    .legend-text {
-      font-size: 13px;
-      color: var(--ctp-text);
-      font-weight: 500;
-    }
-
-    .tooltip {
-      position: fixed;
-      background: var(--ctp-surface0);
-      border: 1px solid var(--ctp-surface1);
-      border-radius: 6px;
-      padding: 12px 16px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-      max-width: 400px;
-      z-index: 1000;
-      pointer-events: auto;
-      opacity: 0;
-      transition: opacity 0.2s ease;
-      font-size: 13px;
-      line-height: 1.6;
-      color: var(--ctp-text);
-    }
-
-    .tooltip a {
-      color: var(--ctp-blue);
-      text-decoration: none;
-      word-break: break-all;
-    }
-
-    .tooltip a:hover {
-      text-decoration: underline;
-    }
-
-    .tooltip.show {
-      opacity: 1;
-    }
-
-    @media (max-width: 768px) {
-      .coordinate-system {
-        height: 500px;
-      }
-
-      .coordinate-canvas {
-        padding: 40px;
-      }
-
-      .axis-x {
-        left: 40px;
-        right: 40px;
-      }
-
-      .axis-y {
-        top: 40px;
-        bottom: 40px;
-      }
-
-      .label-x-left {
-        left: 40px;
-        font-size: 12px;
-        transform: translate(-100%, -50%) translateY(12px) translateX(20px);
-      }
-
-      .label-x-right {
-        right: 40px;
-        font-size: 12px;
-        transform: translate(100%, -50%) translateY(12px) translateX(-20px);
-      }
-
-      .label-y-top {
-        top: 40px;
-        font-size: 12px;
-      }
-
-      .label-y-bottom {
-        bottom: 40px;
-        font-size: 12px;
-      }
-
-      .tooltip {
-        max-width: 280px;
-        font-size: 12px;
-      }
-
-      .publication-label {
-        font-size: 10px;
-        margin-top: 15px;
-      }
-
-      .quadrant-message {
-        font-size: 14px;
-        max-width: 150px;
-      }
-
-      .legend {
-        top: 50px;
-        left: 50px;
-        padding: 10px 12px;
-      }
-
-      .legend-text {
-        font-size: 11px;
-      }
-
-      .legend-dot {
-        width: 14px;
-        height: 14px;
-      }
-    }
-
-    .photo-credit {
-      position: absolute;
-      bottom: 20px;
-      right: 20px;
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 14px;
-      font-weight: 300;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-      z-index: 10;
-    }
-
-    @media (max-width: 768px) {
-      .photo-credit {
-        bottom: 15px;
-        right: 15px;
-        font-size: 12px;
-      }
-    }
-  </style>
 
   <!-- =======================================================
   * Template Name: iPortfolio
@@ -388,24 +82,24 @@
 <body>
 
   <!-- ======= Mobile nav toggle button ======= -->
-  <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+  <i class="bi bi-list mobile-nav-toggle d-xl-none" role="button" tabindex="0" aria-label="Toggle navigation"></i>
 
   <!-- ======= Header ======= -->
   <header id="header">
     <div class="d-flex flex-column">
 
       <div class="profile">
-        <img src="assets/img/profile-img-2.jpg" alt="" class="img-fluid rounded-circle">
+        <img src="assets/img/profile-img-2.webp" alt="Hao Zhang" width="700" height="700" decoding="async" class="img-fluid rounded-circle">
         <h1 class="text-light"><a href="index.html">Hao Zhang</a></h1>
         <div class="social-links mt-3 text-center">
           <!-- <a href="https://twitter.com/HaoSeismo" class="twitter"><i class="bx bxl-twitter"></i></a> -->
           <!-- <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a> -->
           <!-- <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a> -->
           <!-- <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a> -->
-          <a href="https://github.com/zhsess" class="github"><i class="bx bxl-github"></i></a>
-          <a href="mailto:haozhang@caltech.edu" class="email"><i class="bx bx-envelope"></i></a>
-          <!-- <a href="www.linkedin.com/in/hzhang63" class="linkedin"><i class="bx bxl-linkedin"></i></a> -->
-          <a href="https://scholar.google.com/citations?hl=en&user=-yE8wYsAAAAJ" class="google-scholar">
+          <a href="https://github.com/zhsess" class="github" aria-label="GitHub" rel="me"><i class="bx bxl-github"></i></a>
+          <a href="mailto:haozhang@caltech.edu" class="email" aria-label="Email"><i class="bx bx-envelope"></i></a>
+          <!-- <a href="https://www.linkedin.com/in/hzhang63" class="linkedin"><i class="bx bxl-linkedin"></i></a> -->
+          <a href="https://scholar.google.com/citations?hl=en&user=-yE8wYsAAAAJ" class="google-scholar" aria-label="Google Scholar" rel="me">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="18" height="18">
               <path fill="#4285f4" d="M256 411.12L0 202.667 256 0z" />
               <path fill="#356ac3" d="M256 411.12l256-208.453L256 0z" />
@@ -414,8 +108,8 @@
                 d="M121.037 298.667c23.968-50.453 75.392-85.334 134.963-85.334s110.995 34.881 134.963 85.334H121.037z" />
             </svg>
           </a>
-          <a href="assets/file/CV_HZ.pdf" class="cv" target="_blank" title="CV"><i class="bx bx-file"></i></a>
-          <a href="#" class="theme-toggle" id="theme-toggle" title="Toggle theme" aria-label="Toggle theme">
+          <a href="assets/file/CV_HZ.pdf" class="cv" target="_blank" rel="noopener" title="CV" aria-label="CV (PDF)"><i class="bx bx-file"></i></a>
+          <a href="#" class="theme-toggle" id="theme-toggle" role="button" title="Toggle theme" aria-label="Toggle theme">
             <i class="bx bx-moon theme-icon-moon"></i>
             <i class="bx bx-sun theme-icon-sun"></i>
           </a>
@@ -474,7 +168,7 @@
           </div>
 
           <div class="col-lg-5 pt-4 pt-lg-0 " data-aos="fade-left">
-            <img src="assets/img/dinner.jpeg" class="img-fluid" alt="">
+            <img src="assets/img/dinner.webp" class="img-fluid" alt="Dinner with Heidi, John, Yehuda and Tom after the PhD defense" width="1400" height="922" loading="lazy" decoding="async">
             <p class="text-center mt-2" style="color: var(--ctp-overlay0); font-size: 0.9rem; font-style: italic;">Dinner with
               Heidi, John, Yehuda and Tom after my PhD defense</p>
           </div>
@@ -575,7 +269,7 @@
               <h5>2016 - 2020</h5>
               <p><em>Peking University, Beijing, China</em></p>
               <ul>
-                <li>Thesis Advisor: <a href="https://sustech.edu.cn/en/faculties/chenxiaofei.html ">Xiaofei Chen</a></li>
+                <li>Thesis Advisor: <a href="https://sustech.edu.cn/en/faculties/chenxiaofei.html">Xiaofei Chen</a></li>
                 <li>Thesis: Frequency-Bessel Transform Method to Extract Higher-Mode Rayleigh Dispersion Curves</li>
               </ul>
             </div>
@@ -614,6 +308,7 @@
           </div>
 
         </div>
+      </div>
     </section><!-- End Resume Section -->
 
     <!-- ======= Projects Section ======= -->
@@ -626,7 +321,7 @@
 
         <div class="row project-item align-items-center" data-aos="fade-up">
           <div class="col-lg-5">
-            <img src="assets/img/portfolio/Glacier.png" class="img-fluid" alt="project 1">
+            <img src="assets/img/portfolio/Glacier.webp" class="img-fluid" alt="Figure: Thermal and mechanical dynamics of grounding zone" width="1400" height="1037" loading="lazy" decoding="async">
           </div>
           <div class="col-lg-7 content">
             <h3>Thermal and mechanical dynamics of grounding zone</h3>
@@ -636,7 +331,7 @@
 
         <div class="row project-item align-items-center" data-aos="fade-up">
           <div class="col-lg-5 order-lg-2">
-            <img src="assets/img/portfolio/DAS.png" class="img-fluid" alt="project 2">
+            <img src="assets/img/portfolio/DAS.webp" class="img-fluid" alt="Figure: Earthquake source imaging with DAS" width="1400" height="991" loading="lazy" decoding="async">
           </div>
           <div class="col-lg-7 content order-lg-1">
             <h3>Earthquake source imaging with DAS</h3>
@@ -646,7 +341,7 @@
 
         <div class="row project-item align-items-center" data-aos="fade-up">
           <div class="col-lg-5">
-            <img src="assets/img/portfolio/Garlock.png" class="img-fluid" alt="project 3">
+            <img src="assets/img/portfolio/Garlock.webp" class="img-fluid" alt="Figure: Understanding complex fault systems" width="1066" height="922" loading="lazy" decoding="async">
           </div>
           <div class="col-lg-7 content">
             <h3>Understanding complex fault systems</h3>
@@ -656,7 +351,7 @@
 
         <div class="row project-item align-items-center" data-aos="fade-up">
           <div class="col-lg-5 order-lg-2">
-            <img src="assets/img/portfolio/Subduction.png" class="img-fluid" alt="project 4">
+            <img src="assets/img/portfolio/Subduction.webp" class="img-fluid" alt="Figure: Megathrust earthquakes in cold mantle wedge corners" width="1400" height="987" loading="lazy" decoding="async">
           </div>
           <div class="col-lg-7 content order-lg-1">
             <h3>Megathrust earthquakes in cold mantle wedge corners</h3>
@@ -682,49 +377,13 @@
             <li>[8] Zhang, H. et al., Crystallization and breaking of ice at the grounding line under the tidal machine (in prep.)</li>
             <li>[7] Zhang, H., Guo, H., Salinas, M., Dolan, J.F. &amp; Zhan, Z., Hidden structural linkages redefine seismic hazard limits of the Garlock fault (<i>Science Advances</i>, in revision)</li>
             <li>[6] Zhang, H. &amp; Zhan, Z. (2026) Resolving sub-kilometer cascading ruptures of moderate earthquakes with Distributed Acoustic Sensing, <i>JGR: Solid Earth</i>, <b>131</b>, <a href="https://doi.org/10.1029/2026JB034841">e2026JB034841</a></li>
-            <li>[5] Zhang, H., Barbot, S., Yang, Z., Zhang, L., Liu, M. &amp; Platt, J. (2026) Large megathrust earthquakes in cold mantle wedge corners under lawsonite blueschist facies, <i>Nature Commun.</i>, doi:<a href="https://www.nature.com/articles/s41467-026-70315-4">10.1038/s41467-026-70315-4</a></li>
+            <li>[5] Zhang, H., Barbot, S., Yang, Z., Zhang, L., Liu, M. &amp; Platt, J. (2026) Large megathrust earthquakes in cold mantle wedge corners under lawsonite blueschist facies, <i>Nature Commun.</i>, <a href="https://doi.org/10.1038/s41467-026-70315-4">s41467-026-70315-4</a></li>
             <li>[4] Zhang, H., Vidale, J.E. &amp; Wang, W. (2025) Aftershocks on the planar rupture surface of the deep-focus Mw 7.9 Bonin Islands earthquake, <i>The Seismic Record</i>, <b>5(1)</b>: <a href="https://doi.org/10.1785/0320240035">35-43</a></li>
             <li>[3] Zhang, H., Vidale, J.E. &amp; Wang, W. (2024) Scattering evidence for an ancient subducted slab using the novel raypath P*PKP, <i>Geophy. Res. Let.</i>, <b>51</b>, <a href="https://doi.org/10.1029/2024GL110130">e2024GL110130</a></li>
             <li>[2] Zhang, H. &amp; Ben-Zion, Y. (2024) Enhancing regional seismic velocity model with higher-resolution local results using sparse dictionary learning, <i>JGR: Solid Earth</i>, <b>129</b>, <a href="https://doi.org/10.1029/2023JB027016">e2023JB027016</a></li>
             <li>[1] Zhang, H., Meng, H. &amp; Ben-Zion, Y. (2023) Lateral Variations Across the Southern San Andreas Fault Zone Revealed from Analysis of Traffic Signals at a Dense Seismic Array, <i>Geophy. Res. Let.</i>, <b>50</b>, <a href="https://doi.org/10.1029/2023GL103759">e2023GL103759</a></li>
           </ul>
         </div>
-
-        <!-- Interactive Coordinate System
-        <div class="coordinate-system">
-          <div class="coordinate-canvas" id="coordinateCanvas">
-            Axes
-            <div class="axis axis-x"></div>
-            <div class="axis axis-y"></div>
-
-            Axis Labels
-            <div class="axis-label label-x-left">Incremental</div>
-            <div class="axis-label label-x-right">Novel</div>
-            <div class="axis-label label-y-top">Solid</div>
-            <div class="axis-label label-y-bottom">Preliminary</div>
-
-            Legend
-            <div class="legend">
-              <div class="legend-item">
-                <div class="legend-dot published"></div>
-                <div class="legend-text">Published/Accepted</div>
-              </div>
-              <div class="legend-item">
-                <div class="legend-dot in-review"></div>
-                <div class="legend-text">In Review</div>
-              </div>
-              <div class="legend-item">
-                <div class="legend-dot in-prep"></div>
-                <div class="legend-text">In Prep.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p style="text-align: center; margin-bottom: 10px; font-weight: normal;">Self-assessment of my published work in the dimensions of novelty and solidity.</p>
-
-        Tooltip
-        <div id="tooltip" class="tooltip"></div>
-        -->
 
       </div>
     </section><!-- End Portfolio Section -->
@@ -743,32 +402,32 @@
             <div class="swiper-wrapper">
               <div class="swiper-slide">
                 <figure>
-                  <img src="assets/img/gallary/AGU2019.jpg" alt="AGU 2019">
+                  <img src="assets/img/gallary/AGU2019.webp" alt="AGU 2019" width="1800" height="1350" loading="lazy" decoding="async">
                   <figcaption>My very first AGU conference (December 2019)</figcaption>
                 </figure>
               </div>
               <div class="swiper-slide">
                 <figure>
-                  <img src="assets/img/gallary/Catalina.jpg" alt="Catalina Island">
+                  <img src="assets/img/gallary/Catalina.webp" alt="Catalina Island" width="1800" height="1204" loading="lazy" decoding="async">
                   <figcaption>Collocting rock samples with Sylvain Barbot on Catalina Island (January 2024)</figcaption>
                 </figure>
               </div>
               <div class="swiper-slide">
                 <figure>
-                  <img src="assets/img/gallary/John_Peter.jpg" alt="John and Peter">
+                  <img src="assets/img/gallary/John_Peter.webp" alt="John and Peter" width="1800" height="1350" loading="lazy" decoding="async">
                   <figcaption>Fieldwork with John and Peter @ Piñon Flat Observatory (February 2025)</figcaption>
                 </figure>
               </div>
               <div class="swiper-slide">
                 <figure>
-                  <img src="assets/img/gallary/Lots_of_John.jpg" alt="Lots of John">
+                  <img src="assets/img/gallary/Lots_of_John.webp" alt="Lots of John" width="1350" height="1800" loading="lazy" decoding="async">
                   <figcaption>Me and a lot of John celebrating my successful PhD defense (April 2025)</figcaption>
                 </figure>
               </div>
 
               <div class="swiper-slide">
                 <figure>
-                  <img src="assets/img/gallary/Ruolin_JJ_Weiyi.jpg" alt="Ruolin, JJ, and Weiyi">
+                  <img src="assets/img/gallary/Ruolin_JJ_Weiyi.webp" alt="Ruolin, JJ, and Weiyi" width="1800" height="1350" loading="lazy" decoding="async">
                   <figcaption>Trip to San Diego with Ruolin, JJ, and Weiyi (May 2025)</figcaption>
                 </figure>
               </div>
@@ -846,277 +505,13 @@
       class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/typed.js/typed.umd.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js" defer></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js" defer></script>
+  <script src="assets/vendor/typed.js/typed.umd.js" defer></script>
 
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/isotope/3.0.6/isotope.pkgd.min.js"></script>
+  <!-- Main JS File -->
+  <script src="assets/js/main.js" defer></script>
 
-  <script src="assets/js/active_portfolio.js"></script>
-
-  <!-- Publications Interactive Script -->
-  <script>
-    // Publications data
-    const publicationsData = [
-      {
-        "x": 6,
-        "y": 7,
-        "shortName": "Zhang & Zhan",
-        "citation": "<b> Zhang, H.</b> & Zhan, Z., Illuminating ruptures of moderate earthquakes with multi‑fibre networks",
-        "doi": null,
-        "status": "in-review"
-      },
-      {
-        "x": 8,
-        "y": 8,
-        "shortName": "Zhang et al.",
-        "citation": "<b> Zhang, H.</b> et al., Monitoring Glacial Grounding Zone Icequakes With Fiber-Optic and Dense Seismic Arrays",
-        "doi": null,
-        "status": "in-prep"
-      },
-      {
-        "x": 8,
-        "y": 1,
-        "shortName": "Zhang & Vidale",
-        "citation": "<b> Zhang, H.</b> & Vidale, J.E., Earthquake Shaking Scales with Rupture Complexity Revealed by Aftershock Pattern",
-        "doi": null,
-        "status": "in-review"
-      },
-      {
-        "x": 4,
-        "y": 6,
-        "shortName": "Zhang et al. 2026",
-        "citation": "<b> Zhang, H.</b>, Barbot, S., Yang, Z., Zhang, L., Liu, M. &amp; Platt, J., Large megathrust earthquakes in cold mantle wedge corners under lawsonite blueschist facies, accepted by <i>Nature Communications</i>",
-        "doi": null,
-        "status": "published"
-      },
-      {
-        "x": -3,
-        "y": 8,
-        "shortName": "Zhang et al., 2025",
-        "citation": "<b> Zhang, H.</b>, Vidale, J.E. & Wang, W., 2025. Aftershocks on the planar rupture surface of the deep-focus Mw 7.9 Bonin Islands earthquake, <i>The Seismic Record</i>, <b>5(1)</b>:35-43",
-        "doi": "10.1785/0320240035",
-        "status": "published"
-      },
-      {
-        "x": 5,
-        "y": 2,
-        "shortName": "Zhang et al., 2024",
-        "citation": "<b> Zhang, H.</b>, Vidale, J.E. & Wang, W., 2024. Scattering evidence for an ancient subducted slab using the novel raypath P*PKP, <i>Geophy. Res. Let.</i>, <b>51</b>, e2024GL110130",
-        "doi": "10.1029/2024GL110130",
-        "status": "published"
-      },
-      {
-        "x": 7,
-        "y": -3,
-        "shortName": "Zhang & Ben-Zion, 2024",
-        "citation": "<b> Zhang, H.</b> & Ben-Zion, Y., 2024. Enhancing regional seismic velocity model with higher-resolution local results using sparse dictionary learning, <i>JGR: Solid Earth</i>, <b>129</b>, e2023JB027016",
-        "doi": "10.1029/2023JB027016",
-        "status": "published"
-      },
-      {
-        "x": 0,
-        "y": 6,
-        "shortName": "Zhang et al., 2023",
-        "citation": "<b> Zhang, H.</b>, Meng, H. & Ben-Zion, Y., 2023. Lateral Variations Across the Southern San Andreas Fault Zone Revealed from Analysis of Traffic Signals at a Dense Seismic Array, <i>Geophy. Res. Let.</i>, <b>50</b>, e2023GL103759",
-        "doi": "10.1029/2023GL103759",
-        "status": "published"
-      }
-    ];
-
-    // Load and render publications
-    function loadPublications() {
-      try {
-        console.log('Loading publications...');
-        const publications = publicationsData;
-        console.log('Publications loaded:', publications.length);
-
-        if (publications && publications.length > 0) {
-          renderPublications(publications);
-        } else {
-          console.error('No publications found');
-        }
-      } catch (error) {
-        console.error('Error loading publications:', error);
-      }
-    }
-
-    function renderPublications(publications) {
-      const canvas = document.getElementById('coordinateCanvas');
-      if (!canvas) return;
-
-      const tooltip = document.getElementById('tooltip');
-
-      // Clear any existing points, labels, and messages
-      const existingElements = canvas.querySelectorAll('.publication-point, .publication-label, .quadrant-message');
-      existingElements.forEach(element => element.remove());
-
-      // Get the actual rendering area (excluding padding)
-      const padding = window.innerWidth <= 768 ? 40 : 60;
-      const width = canvas.clientWidth - padding * 2;
-      const height = canvas.clientHeight - padding * 2;
-
-      console.log('Canvas dimensions:', { width, height, padding });
-
-      // Add message in third quadrant (x < 0, y < 0)
-      // Center of third quadrant: x=-5, y=-5 in coordinate terms
-      const messageX = ((- 5 + 10) / 20) * width + padding;
-      const messageY = ((- (- 5) + 10) / 20) * height + padding;
-
-      const message = document.createElement('div');
-      message.className = 'quadrant-message';
-      message.style.left = messageX + 'px';
-      message.style.top = messageY + 'px';
-      message.style.transform = 'translate(-50%, -50%)';
-      message.innerHTML = 'Let me know if you think<br>any of my papers fall<br>within this quadrant';
-      canvas.appendChild(message);
-
-      publications.forEach((pub, index) => {
-        // Validate publication data
-        if (typeof pub.x !== 'number' || typeof pub.y !== 'number') {
-          console.warn('Invalid publication data:', pub);
-          return;
-        }
-
-        // Convert coordinates from [-10, 10] to pixel positions
-        const x = ((pub.x + 10) / 20) * width + padding;
-        const y = ((-pub.y + 10) / 20) * height + padding; // Invert Y axis
-
-        // Create point element
-        const point = document.createElement('div');
-        point.className = 'publication-point';
-
-        // Add status class for color
-        const status = pub.status || 'published';
-        point.classList.add(status);
-
-        point.style.left = x + 'px';
-        point.style.top = y + 'px';
-        point.dataset.citation = pub.citation;
-        point.dataset.doi = pub.doi || '';
-        point.dataset.index = index;
-
-        // Create label element if shortName exists
-        if (pub.shortName) {
-          const label = document.createElement('div');
-          label.className = 'publication-label';
-          label.style.left = x + 'px';
-          label.style.top = y + 'px';
-          label.textContent = pub.shortName;
-          canvas.appendChild(label);
-        }
-
-        // Mouse events
-        point.addEventListener('mouseenter', function (e) {
-          showTooltip(e, this);
-        });
-
-        point.addEventListener('mouseleave', function (e) {
-          hideTooltip();
-        });
-
-        // Touch events for mobile
-        point.addEventListener('touchstart', function (e) {
-          e.preventDefault();
-          this.classList.add('active');
-          showTooltip(e.touches[0], this);
-        });
-
-        point.addEventListener('touchend', function (e) {
-          e.preventDefault();
-          this.classList.remove('active');
-          hideTooltip();
-        });
-
-        canvas.appendChild(point);
-      });
-
-      console.log('Rendered', publications.length, 'publication points');
-
-      function showTooltip(event, element) {
-        const citation = element.dataset.citation;
-        const doi = element.dataset.doi;
-
-        // Create HTML content with DOI link if available
-        let content = citation;
-        if (doi && doi !== 'null' && doi !== '') {
-          content += `<br><br><a href="https://doi.org/${doi}" target="_blank" rel="noopener noreferrer">DOI: ${doi}</a>`;
-        }
-
-        tooltip.innerHTML = content;
-        tooltip.classList.add('show');
-
-        // Position tooltip (need to wait for content to render)
-        setTimeout(() => {
-          const pointRect = element.getBoundingClientRect();
-          const tooltipRect = tooltip.getBoundingClientRect();
-
-          let left = pointRect.left + pointRect.width / 2;
-          let top = pointRect.top - tooltipRect.height - 10;
-
-          // Adjust if tooltip goes off screen
-          if (left + tooltipRect.width / 2 > window.innerWidth) {
-            left = window.innerWidth - tooltipRect.width / 2 - 10;
-          }
-          if (left - tooltipRect.width / 2 < 0) {
-            left = tooltipRect.width / 2 + 10;
-          }
-          if (top < 0) {
-            top = pointRect.bottom + 10;
-          }
-
-          tooltip.style.left = left + 'px';
-          tooltip.style.top = top + 'px';
-          tooltip.style.transform = 'translateX(-50%)';
-        }, 0);
-      }
-
-      function hideTooltip() {
-        // Delay hiding to allow clicking on links
-        setTimeout(() => {
-          if (!tooltip.matches(':hover')) {
-            tooltip.classList.remove('show');
-          }
-        }, 100);
-      }
-
-      // Hide tooltip when it's no longer hovered
-      tooltip.addEventListener('mouseleave', function () {
-        tooltip.classList.remove('show');
-      });
-
-      // Hide tooltip when scrolling
-      window.addEventListener('scroll', hideTooltip);
-
-      // Reposition on window resize
-      let resizeTimeout;
-      window.addEventListener('resize', function () {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(function () {
-          renderPublications(publications);
-        }, 250);
-      });
-    }
-
-    // Initialize when DOM is loaded
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function () {
-        console.log('DOM loaded, initializing...');
-        loadPublications();
-      });
-    } else {
-      // DOM already loaded
-      loadPublications();
-    }
-  </script>
 </body>
 
 </html>

@@ -1,0 +1,256 @@
+<!-- Archived: script for the interactive publication map. Paste back before </body> together with publications-map.html and publications-map.css. -->
+  <!-- Publications Interactive Script -->
+  <script>
+    // Publications data
+    const publicationsData = [
+      {
+        "x": 6,
+        "y": 7,
+        "shortName": "Zhang & Zhan",
+        "citation": "<b> Zhang, H.</b> & Zhan, Z., Illuminating ruptures of moderate earthquakes with multi‑fibre networks",
+        "doi": null,
+        "status": "in-review"
+      },
+      {
+        "x": 8,
+        "y": 8,
+        "shortName": "Zhang et al.",
+        "citation": "<b> Zhang, H.</b> et al., Monitoring Glacial Grounding Zone Icequakes With Fiber-Optic and Dense Seismic Arrays",
+        "doi": null,
+        "status": "in-prep"
+      },
+      {
+        "x": 8,
+        "y": 1,
+        "shortName": "Zhang & Vidale",
+        "citation": "<b> Zhang, H.</b> & Vidale, J.E., Earthquake Shaking Scales with Rupture Complexity Revealed by Aftershock Pattern",
+        "doi": null,
+        "status": "in-review"
+      },
+      {
+        "x": 4,
+        "y": 6,
+        "shortName": "Zhang et al. 2026",
+        "citation": "<b> Zhang, H.</b>, Barbot, S., Yang, Z., Zhang, L., Liu, M. &amp; Platt, J., Large megathrust earthquakes in cold mantle wedge corners under lawsonite blueschist facies, accepted by <i>Nature Communications</i>",
+        "doi": null,
+        "status": "published"
+      },
+      {
+        "x": -3,
+        "y": 8,
+        "shortName": "Zhang et al., 2025",
+        "citation": "<b> Zhang, H.</b>, Vidale, J.E. & Wang, W., 2025. Aftershocks on the planar rupture surface of the deep-focus Mw 7.9 Bonin Islands earthquake, <i>The Seismic Record</i>, <b>5(1)</b>:35-43",
+        "doi": "10.1785/0320240035",
+        "status": "published"
+      },
+      {
+        "x": 5,
+        "y": 2,
+        "shortName": "Zhang et al., 2024",
+        "citation": "<b> Zhang, H.</b>, Vidale, J.E. & Wang, W., 2024. Scattering evidence for an ancient subducted slab using the novel raypath P*PKP, <i>Geophy. Res. Let.</i>, <b>51</b>, e2024GL110130",
+        "doi": "10.1029/2024GL110130",
+        "status": "published"
+      },
+      {
+        "x": 7,
+        "y": -3,
+        "shortName": "Zhang & Ben-Zion, 2024",
+        "citation": "<b> Zhang, H.</b> & Ben-Zion, Y., 2024. Enhancing regional seismic velocity model with higher-resolution local results using sparse dictionary learning, <i>JGR: Solid Earth</i>, <b>129</b>, e2023JB027016",
+        "doi": "10.1029/2023JB027016",
+        "status": "published"
+      },
+      {
+        "x": 0,
+        "y": 6,
+        "shortName": "Zhang et al., 2023",
+        "citation": "<b> Zhang, H.</b>, Meng, H. & Ben-Zion, Y., 2023. Lateral Variations Across the Southern San Andreas Fault Zone Revealed from Analysis of Traffic Signals at a Dense Seismic Array, <i>Geophy. Res. Let.</i>, <b>50</b>, e2023GL103759",
+        "doi": "10.1029/2023GL103759",
+        "status": "published"
+      }
+    ];
+
+    // Load and render publications
+    function loadPublications() {
+      try {
+        console.log('Loading publications...');
+        const publications = publicationsData;
+        console.log('Publications loaded:', publications.length);
+
+        if (publications && publications.length > 0) {
+          renderPublications(publications);
+        } else {
+          console.error('No publications found');
+        }
+      } catch (error) {
+        console.error('Error loading publications:', error);
+      }
+    }
+
+    function renderPublications(publications) {
+      const canvas = document.getElementById('coordinateCanvas');
+      if (!canvas) return;
+
+      const tooltip = document.getElementById('tooltip');
+
+      // Clear any existing points, labels, and messages
+      const existingElements = canvas.querySelectorAll('.publication-point, .publication-label, .quadrant-message');
+      existingElements.forEach(element => element.remove());
+
+      // Get the actual rendering area (excluding padding)
+      const padding = window.innerWidth <= 768 ? 40 : 60;
+      const width = canvas.clientWidth - padding * 2;
+      const height = canvas.clientHeight - padding * 2;
+
+      console.log('Canvas dimensions:', { width, height, padding });
+
+      // Add message in third quadrant (x < 0, y < 0)
+      // Center of third quadrant: x=-5, y=-5 in coordinate terms
+      const messageX = ((- 5 + 10) / 20) * width + padding;
+      const messageY = ((- (- 5) + 10) / 20) * height + padding;
+
+      const message = document.createElement('div');
+      message.className = 'quadrant-message';
+      message.style.left = messageX + 'px';
+      message.style.top = messageY + 'px';
+      message.style.transform = 'translate(-50%, -50%)';
+      message.innerHTML = 'Let me know if you think<br>any of my papers fall<br>within this quadrant';
+      canvas.appendChild(message);
+
+      publications.forEach((pub, index) => {
+        // Validate publication data
+        if (typeof pub.x !== 'number' || typeof pub.y !== 'number') {
+          console.warn('Invalid publication data:', pub);
+          return;
+        }
+
+        // Convert coordinates from [-10, 10] to pixel positions
+        const x = ((pub.x + 10) / 20) * width + padding;
+        const y = ((-pub.y + 10) / 20) * height + padding; // Invert Y axis
+
+        // Create point element
+        const point = document.createElement('div');
+        point.className = 'publication-point';
+
+        // Add status class for color
+        const status = pub.status || 'published';
+        point.classList.add(status);
+
+        point.style.left = x + 'px';
+        point.style.top = y + 'px';
+        point.dataset.citation = pub.citation;
+        point.dataset.doi = pub.doi || '';
+        point.dataset.index = index;
+
+        // Create label element if shortName exists
+        if (pub.shortName) {
+          const label = document.createElement('div');
+          label.className = 'publication-label';
+          label.style.left = x + 'px';
+          label.style.top = y + 'px';
+          label.textContent = pub.shortName;
+          canvas.appendChild(label);
+        }
+
+        // Mouse events
+        point.addEventListener('mouseenter', function (e) {
+          showTooltip(e, this);
+        });
+
+        point.addEventListener('mouseleave', function (e) {
+          hideTooltip();
+        });
+
+        // Touch events for mobile
+        point.addEventListener('touchstart', function (e) {
+          e.preventDefault();
+          this.classList.add('active');
+          showTooltip(e.touches[0], this);
+        });
+
+        point.addEventListener('touchend', function (e) {
+          e.preventDefault();
+          this.classList.remove('active');
+          hideTooltip();
+        });
+
+        canvas.appendChild(point);
+      });
+
+      console.log('Rendered', publications.length, 'publication points');
+
+      function showTooltip(event, element) {
+        const citation = element.dataset.citation;
+        const doi = element.dataset.doi;
+
+        // Create HTML content with DOI link if available
+        let content = citation;
+        if (doi && doi !== 'null' && doi !== '') {
+          content += `<br><br><a href="https://doi.org/${doi}" target="_blank" rel="noopener noreferrer">DOI: ${doi}</a>`;
+        }
+
+        tooltip.innerHTML = content;
+        tooltip.classList.add('show');
+
+        // Position tooltip (need to wait for content to render)
+        setTimeout(() => {
+          const pointRect = element.getBoundingClientRect();
+          const tooltipRect = tooltip.getBoundingClientRect();
+
+          let left = pointRect.left + pointRect.width / 2;
+          let top = pointRect.top - tooltipRect.height - 10;
+
+          // Adjust if tooltip goes off screen
+          if (left + tooltipRect.width / 2 > window.innerWidth) {
+            left = window.innerWidth - tooltipRect.width / 2 - 10;
+          }
+          if (left - tooltipRect.width / 2 < 0) {
+            left = tooltipRect.width / 2 + 10;
+          }
+          if (top < 0) {
+            top = pointRect.bottom + 10;
+          }
+
+          tooltip.style.left = left + 'px';
+          tooltip.style.top = top + 'px';
+          tooltip.style.transform = 'translateX(-50%)';
+        }, 0);
+      }
+
+      function hideTooltip() {
+        // Delay hiding to allow clicking on links
+        setTimeout(() => {
+          if (!tooltip.matches(':hover')) {
+            tooltip.classList.remove('show');
+          }
+        }, 100);
+      }
+
+      // Hide tooltip when it's no longer hovered
+      tooltip.addEventListener('mouseleave', function () {
+        tooltip.classList.remove('show');
+      });
+
+      // Hide tooltip when scrolling
+      window.addEventListener('scroll', hideTooltip);
+
+      // Reposition on window resize
+      let resizeTimeout;
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function () {
+          renderPublications(publications);
+        }, 250);
+      });
+    }
+
+    // Initialize when DOM is loaded
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('DOM loaded, initializing...');
+        loadPublications();
+      });
+    } else {
+      // DOM already loaded
+      loadPublications();
+    }
+  </script>
